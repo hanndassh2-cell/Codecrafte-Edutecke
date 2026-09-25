@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<body>
+<div style="width:0; position:absolute; top: 100px; left: 100px;">
+  <div id="test" style="transform: rotate(90deg); white-space: nowrap;">
+    يمنع تداول هذا الاختبار
+  </div>
+</div>
+<script>
+  const el = document.getElementById("test");
+  const range = document.createRange();
+  range.selectNodeContents(el.firstChild);
+  const rRect = range.getBoundingClientRect();
+  const eRect = el.getBoundingClientRect();
+  console.log("Range rect:", rRect.width, rRect.height);
+  console.log("Element rect:", eRect.width, eRect.height);
+</script>
+</body>
+</html>

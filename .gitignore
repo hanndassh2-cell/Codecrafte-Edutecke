@@ -1,0 +1,14 @@
+node_modules/
+build/
+dist/
+coverage/
+.tmp/
+edutech-preview.tar.gz
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Old/export environment files
+.archive/
+.openai/

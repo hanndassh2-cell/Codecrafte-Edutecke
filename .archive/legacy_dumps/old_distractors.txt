@@ -1,0 +1,58 @@
+  async generateDistractors(
+    questionText: string,
+    answerText: string,
+    questionType: string,
+    subjectName: string
+  ): Promise<DistractorGenResult> {
+    // Clean HTML but preserve equations (basic text extraction)
+    const cleanHTML = (html: string) => {
+      if (typeof window !== 'undefined' && window.DOMParser) {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+      }
+      return html.replace(/<[^>]+>/g, " ");
+    };
+
+    const cleanQ = cleanHTML(questionText).trim();
+    const cleanA = cleanHTML(answerText).trim();
+
+    const prompt = `أنت خبير تربوي في تصميم الأسئلة والمناهج${subjectName ? ` لمادة ${subjectName}` : ""}.
+المطلوب توليد 3 مشتتات (خيارات خاطئة ولكن ذكية ومنطقية ومبنية على أخطاء شائعة) للسؤال التالي.
+نوع السؤال: ${questionType || "اختيار من متعدد"}
+نص السؤال: ${cleanQ}
+${cleanA ? `الإجابة الصحيحة (يجب عدم تكرارها في المشتتات): ${cleanA}` : ""}
+
+شروط هامة جداً:
+1. قم بالرد بصيغة JSON فقط.
+2. يجب أن يحتوي حقل "distractors" على 3 مشتتات خاطئة فريدة ومنطقية.
+3. يمنع منعاً باتاً تضمين الإجابة الصحيحة ضمن المشتتات.
+4. يمنع ترك أي مشتت فارغ، أو تكرار مشتت مرتين.
+5. لا تضف أي نص خارج كائن JSON ولا نتائج جزئية.
+
+{
+  "distractors": ["خيار خاطئ 1", "خيار خاطئ 2", "خيار خاطئ 3"],
+  "rationale": "توضيح تربوي للأسباب المنطقية لهذه المشتتات"
+}`;
+
+    try {
+      const responseText = await generateAIResponse(prompt);
+      const jsonMatch = responseText.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+      const jsonStr = jsonMatch ? jsonMatch[1] : responseText.replace(/^[^\{]*/, "").replace(/[^\}]*$/, "");
+      const parsed = JSON.parse(jsonStr);
+      
+      const distractors = (parsed.distractors || []).map((d: string) => cleanLeakedTokens(normalizeBidiPlainText(String(d))).trim()).filter(Boolean);
+      
+      if (distractors.length === 0) {
+        throw new Error("لم يقم الذكاء الاصطناعي بتوليد أي مشتتات صالحة.");
+      }
+      
+      return {
+        distractors,
+        rationale: parsed.rationale,
+      };
+    } catch (e: any) {
+      console.warn("AI Distractor Gen Error:", e);
+      throw e; // Rethrow to show real error in UI
+    }
+  }
+

@@ -1,0 +1,161 @@
+/* Scoped to the writing workspace; preview and both PDF renderers are untouched. */
+.focused-editor-dialog {
+  --document-blue: #0866e8;
+  --document-border: #dce3ed;
+  color: #14223b;
+  font-family: Cairo, sans-serif;
+  isolation: isolate;
+}
+.focused-editor-topbar { z-index: 2; }
+.focused-editor-topbar > div { gap: 20px; min-height: 70px; }
+.focused-editor-topbar h2 { font-size: 16px; font-weight: 700; }
+.focused-editor-topbar p { max-width: 52vw; font-size: 12px; font-weight: 400; }
+.focused-editor-dialog button:focus-visible,
+.focused-editor-dialog label:focus-within,
+.focused-editor-dialog select:focus-visible {
+  outline: 2px solid var(--document-blue);
+  outline-offset: 2px;
+}
+.workspace-toolbar-host { flex: 0 0 auto; position: relative; z-index: 3; background: white; }
+.focused-editor-dialog .lesson-editor-toolbar {
+  position: relative; top: auto; border: 0; border-bottom: 1px solid var(--document-border);
+  box-shadow: 0 2px 4px #14223b08; backdrop-filter: none;
+}
+.focused-editor-dialog .lesson-format-toolbar {
+  min-height: 53px; gap: 7px; padding: 7px 24px; scrollbar-width: thin;
+}
+.focused-editor-dialog .lesson-format-toolbar > div { flex-shrink: 0; }
+.focused-editor-dialog .lesson-format-toolbar select {
+  min-height: 34px; font-size: 14px; background-color: #fff; border-color: var(--document-border); border-radius: 5px;
+}
+.focused-editor-dialog .lesson-format-toolbar button { min-width: 30px; min-height: 32px; }
+.focused-editor-dialog .lesson-format-toolbar button svg { width: 18px; height: 18px; }
+.focused-editor-dialog .lesson-insert-toolbar {
+  min-height: 53px; padding: 5px 24px; gap: 0; background: #fff; scrollbar-width: thin;
+}
+.focused-editor-dialog .lesson-insert-toolbar button,
+.focused-editor-dialog .lesson-insert-toolbar label {
+  flex-direction: row; gap: 8px; min-height: 36px; color: #24324b; font-size: 14px; font-weight: 600;
+}
+.focused-editor-dialog .lesson-insert-toolbar button:hover,
+.focused-editor-dialog .lesson-insert-toolbar label:hover { color: var(--document-blue); background: #edf5ff; }
+.focused-editor-dialog .lesson-insert-toolbar svg { width: 21px; height: 21px; }
+.focused-editor-dialog .lesson-insert-toolbar .lesson-insert-group:last-child { border: 0; }
+.focused-editor-dialog .table-context-toolbar { max-height: 112px; overflow: auto; margin: 0; }
+.focused-editor-body { position: relative; padding-top: 0; overflow: hidden; }
+.document-outline {
+  display: flex; flex-direction: column; flex: 0 0 320px; width: 320px;
+  background: #fff; border-inline-end: 1px solid var(--document-border); min-height: 0;
+}
+.document-outline > div:first-child { padding: 22px 20px 16px; }
+.document-outline > div:first-child > div { font-size: 18px; justify-content: space-between; flex-direction: row-reverse; }
+.document-outline > div:nth-child(2) { padding: 10px 14px; }
+.document-outline .document-outline-card {
+  min-height: 88px; align-items: center; padding: 14px 12px; gap: 12px; border: 1px solid #e1e7ef;
+  border-radius: 6px; margin-bottom: 10px; box-shadow: none;
+}
+.document-outline .document-outline-card[aria-current="page"] { border-color: #3989ff; background: #edf5ff; color: #075dcc; }
+.document-outline-card > span:first-child { width: 32px; height: 36px; background: transparent; }
+.document-outline-card > span:first-child svg { width: 23px; height: 23px; }
+.document-outline-card > span:last-child > span:first-child { font-size: 14px; line-height: 1.7; font-weight: 600; white-space: normal; }
+.document-card-status { display: flex; align-items: center; gap: 6px; margin-top: 7px; color: #7a879c; font-size: 12px; }
+.document-card-status.is-complete { color: #218348; }
+.document-card-status.is-complete svg { border-radius: 50%; background: #27994f; padding: 2px; color: white; }
+.empty-status-circle { width: 16px; height: 16px; border: 1px solid #97a5bb; border-radius: 50%; }
+.document-outline-actions { padding: 12px 14px 18px; border-top: 1px solid var(--document-border); }
+.document-add-card { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 44px; border: 1px solid #3989ff; border-radius: 6px; color: var(--document-blue); font-weight: 700; margin-bottom: 12px; }
+.document-add-card:hover { background: #edf5ff; }
+.document-outline-actions > div > button { flex: 1; height: 40px; justify-content: center; }
+.document-writing-area { min-width: 0; min-height: 0; flex: 1; overflow: auto; padding: 26px 32px 48px; background: #eef1f5; }
+.document-paper {
+  margin-inline: auto; width: 100%; max-width: 920px; min-height: 960px; padding: 45px 32px;
+  background: white; border: 1px solid #e3e8ef; box-shadow: 0 3px 16px #17264212;
+}
+.focused-document-card .lesson-card { margin: 0; min-height: 600px; border: 1px solid #408cff; border-radius: 5px; box-shadow: none; }
+.focused-document-card .lesson-card-selection-strip { display: none; }
+.focused-document-card .lesson-card-header { position: relative; top: auto; padding: 18px 18px 12px; background: white; backdrop-filter: none; border-bottom: 0; }
+.focused-document-card .lesson-card-header input { color: #103e85; font-size: 21px; font-weight: 800; }
+.focused-document-card .lesson-card .ProseMirror { min-height: 470px; padding: 18px 24px 32px; }
+/* Keep saved font sizes and line spacing: page styling must not change export metrics. */
+.focused-document-card .lesson-card .ProseMirror:focus { background: transparent; }
+.workspace-status { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; flex-shrink: 0; min-height: 38px; padding: 4px 18px; border-top: 1px solid var(--document-border); background: white; font-size: 12px; }
+.workspace-status > span + span { border-inline-start: 1px solid var(--document-border); padding-inline-start: 16px; }
+.workspace-zoom, .workspace-language, .workspace-save-state { display: flex; align-items: center; gap: 8px; }
+.workspace-zoom button { display: flex; align-items: center; justify-content: center; min-width: 28px; height: 28px; border-radius: 4px; }
+.workspace-zoom button:hover { background: #edf5ff; }
+.workspace-zoom button:disabled { opacity: .35; }
+.workspace-save-state { margin-inline-start: auto; color: #218348; }
+.workspace-save-state.is-dirty { color: #a46112; }
+.document-outline-toggle { display: none; }
+@media (max-width: 1100px) {
+  .document-outline { flex-basis: 270px; width: 270px; }
+  .document-writing-area { padding: 20px; }
+  .document-paper { padding: 28px 20px; }
+}
+@media (max-width: 850px) {
+  .document-outline-toggle { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: white; border-bottom: 1px solid var(--document-border); font-size: 13px; }
+  .document-outline { display: none; }
+  .document-outline.is-open { display: flex; position: absolute; inset-block: 0; inset-inline-start: 0; z-index: 4; box-shadow: -8px 0 24px #14223b22; }
+  .focused-editor-topbar > div { padding: 10px 14px; gap: 10px; }
+  .focused-editor-topbar h2 { font-size: 14px; }
+  .focused-editor-topbar p { max-width: 46vw; }
+  .focused-editor-dialog .lesson-format-toolbar, .focused-editor-dialog .lesson-insert-toolbar { padding-inline: 10px; }
+}
+@media (max-width: 560px) {
+  .focused-editor-topbar > div > div:first-child > div:first-child { display: none; }
+  .document-writing-area { padding: 12px 8px; }
+  .document-paper { padding: 14px 10px; min-height: 760px; }
+  .focused-document-card .lesson-card-header { padding: 12px 6px; flex-wrap: wrap; }
+  .focused-document-card .lesson-card-header input { font-size: 17px; }
+  .focused-document-card .lesson-card .ProseMirror { padding: 14px 12px 24px; }
+  .workspace-status { gap: 8px; padding-inline: 10px; }
+  .workspace-status > span + span { padding-inline-start: 8px; }
+  .workspace-language { display: none; }
+}
+.dark .document-paper, .dark .document-outline, .dark .workspace-toolbar-host, .dark .workspace-status,
+.dark .focused-document-card .lesson-card-header, .dark .focused-editor-dialog .lesson-insert-toolbar,
+.dark .focused-editor-dialog .lesson-format-toolbar select { background: #0f172a; color: #e2e8f0; border-color: #334155; }
+.dark .document-writing-area { background: #080f1e; }
+.dark .document-outline-card, .dark .document-outline-actions { border-color: #334155; }
+.dark .document-outline .document-outline-card[aria-current="page"] { background: #172b49; color: #93c5fd; }
+.dark .focused-editor-dialog .lesson-insert-toolbar button, .dark .focused-editor-dialog .lesson-insert-toolbar label,
+.dark .focused-document-card .lesson-card-header input { color: #cbd5e1; }
+
+.focused-document-card .lesson-rich-editor { border: 0; box-shadow: none; }
+/* The focused workspace cannot collapse or drag its single open card; its menu retains reorder actions. */
+.focused-document-card .lesson-card-header button[title="طي البطاقة"],
+.focused-document-card .lesson-card-header [aria-label="مقبض إعادة ترتيب البطاقة"] { display: none; }
+
+/* One outline surface in compact and expanded views. */
+.unified-outline { display:flex; flex-direction:column; gap:10px; min-height:0; flex:1; padding:12px; font-size:14px}
+.unified-outline-search { display:flex; align-items:center; gap:8px; border:1px solid #dce5f1; background:#f8fafc; border-radius:8px; padding:8px}
+.unified-outline-search input{min-width:0; width:100%; background:transparent; outline:0}
+.unified-outline>select{border:1px solid #dce5f1; border-radius:8px; padding:8px; background:transparent}
+.unified-outline-list{flex:1; min-height:0; overflow:auto}
+.unified-outline-row { display:flex; align-items:flex-start; gap:5px; padding:9px 5px; margin-bottom:7px; border:1px solid #e2e8f0; border-radius:9px; background:white}
+.unified-outline-row.is-current{background:#eff6ff; border-color:#60a5fa}
+.unified-card-select{flex:1; min-width:0; text-align:right; line-height:1.8}
+.unified-card-select strong { display:block; font-size:14px}
+.unified-card-select small { display:block; font-size:12px; color:#64748b}
+.unified-card-select p{font-size:14px; color:#64748b}
+.unified-drag-handle{cursor:grab; padding:5px; color:#64748b}
+.unified-card-menu{position:relative}
+.unified-card-menu summary{list-style:none; cursor:pointer; padding:5px}
+.unified-card-menu>div{position:absolute; inset-inline-end:0; top:30px; z-index:60; background:white; border:1px solid #dce5f1; border-radius:8px; box-shadow:0 6px 18px #10234b20; min-width:200px; padding:6px}
+.unified-card-menu button { display:block; width:100%; text-align:right; padding:8px; border-radius:5px}
+.unified-card-menu button:hover{background:#f1f5f9}
+.unified-card-menu button:disabled{opacity:.4}
+.focused-editor-body.outline-expanded .document-outline{width:100%; max-width:none; display:flex; position:relative; flex:1}
+.focused-editor-body.outline-expanded .document-writing-area { display:none}
+.outline-expanded .unified-outline{max-width:1050px; width:100%; margin:auto}
+.outline-expanded .unified-outline-row{padding:15px}
+.workspace-view-controls { display:flex; gap:10px; align-items:center; padding:7px 14px; background:white; border-bottom:1px solid #e2e8f0}
+.workspace-view-controls button{padding:7px 12px; border:1px solid #dce5f1; border-radius:7px; font-size:14px; color:#1d4ed8}
+.dark .unified-outline-row,.dark .unified-card-menu>div,.dark .workspace-view-controls{background:#0f172a; color:#e2e8f0; border-color:#334155}
+.dark .unified-outline-search{background:#1e293b}
+.dark .unified-outline-row.is-current{background:#172554}
+
+.unified-outline-row { flex-wrap: wrap; }
+.unified-card-menu[open] { flex-basis: 100%; order: 3; }
+.unified-card-menu[open] > div { position: static; min-width: 0; box-shadow: none; }
+.workspace-view-controls { flex-wrap: wrap; }

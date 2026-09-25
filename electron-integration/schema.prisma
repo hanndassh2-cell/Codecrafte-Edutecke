@@ -1,0 +1,150 @@
+// electron-integration/schema.prisma
+// هذا الملف يحتوي على مخطط قاعدة البيانات متوافق مع SQLite و Prisma ORM
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ----------------------------------------------------
+// المناهج والوحدات والدروس
+// ----------------------------------------------------
+
+model Subject {
+  id                 String   @id @default(uuid())
+  code               String
+  name               String
+  color              String
+  icon               String
+  description        String
+  status             String
+  progressPercentage Int      @default(0)
+  createdAt          DateTime @default(now())
+
+  units              Unit[]
+  lessons            Lesson[]
+  questions          Question[]
+}
+
+model Unit {
+  id          String   @id @default(uuid())
+  subjectId   String
+  code        String
+  title       String
+  description String
+  orderIndex  Int
+  status      String
+
+  subject     Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  lessons     Lesson[]
+  questions   Question[]
+}
+
+model Lesson {
+  id                String   @id @default(uuid())
+  subjectId         String
+  unitId            String
+  title             String
+  orderIndex        Int
+  durationMinutes   Int
+  status            String
+  
+  // نظرًا لأن SQLite لا يدعم القوائم النصية، نحفظ هذه الحقول كنص JSON (Stringified JSON)
+  objectives        String   // JSON String
+  contentParagraphs String   // JSON String
+
+  subject           Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  unit              Unit     @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  questions         Question[]
+}
+
+// ----------------------------------------------------
+// بنك الأسئلة
+// ----------------------------------------------------
+
+model Question {
+  id                 String   @id @default(uuid())
+  subjectId          String
+  unitId             String?
+  lessonId           String?
+  type               String
+  text               String
+  answer             String
+  
+  // حفظ المشتتات والكلمات المفتاحية كنص JSON
+  distractors        String   // JSON String
+  tags               String   // JSON String
+  
+  difficulty         Int
+  importance         Int
+  status             String
+  isPastCycle        Boolean  @default(false)
+  occurrencesCount   Int      @default(0)
+  futureProbability  Int      @default(0)
+  finalWeightScore   Float    @default(0)
+  createdAt          DateTime @default(now())
+
+  subject            Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  unit               Unit?    @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  lesson             Lesson?  @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+}
+
+// ----------------------------------------------------
+// القوالب والإعدادات
+// ----------------------------------------------------
+
+model PrintTemplate {
+  id            String  @id @default(uuid())
+  name          String
+  isDefault     Boolean @default(false)
+  
+  // حفظ التكوينات المعقدة كنص JSON
+  marginsCm     String  // JSON String
+  headerContent String  // JSON String
+  footerContent String  // JSON String
+  watermark     String  // JSON String
+}
+
+model ExamTemplate {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  isDefault       Boolean  @default(false)
+  sections        String   // JSON String (المقاطع وتوزيع الدرجات)
+  difficultyProfile String
+  totalMarks      Int
+  createdAt       DateTime @default(now())
+}
+
+model Setting {
+  id             String  @id @default(uuid())
+  academyName    String
+  colors         String  // JSON String
+  license        String  // JSON String
+  general        String  // JSON String
+}
+
+// ----------------------------------------------------
+// المستخدمون والدورات
+// ----------------------------------------------------
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  role      String
+  password  String   // يجب أن تكون مشفرة (Hashed)
+  createdAt DateTime @default(now())
+}
+
+model Cycle {
+  id          String   @id @default(uuid())
+  year        String
+  term        String
+  description String?
+  createdAt   DateTime @default(now())
+}

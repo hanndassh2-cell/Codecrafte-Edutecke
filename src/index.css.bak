@@ -1,0 +1,1902 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: var(--primary-50-hex, var(--color-blue-50));
+  --color-primary-100: var(--primary-100-hex, var(--color-blue-100));
+  --color-primary-200: var(--primary-200-hex, var(--color-blue-200));
+  --color-primary-300: var(--primary-300-hex, var(--color-blue-300));
+  --color-primary-400: var(--primary-400-hex, var(--color-blue-400));
+  --color-primary-500: var(--primary-500-hex, var(--color-blue-500));
+  --color-primary-600: var(--primary-hex, #0f6cbd);
+  --color-primary-700: var(--primary-700-hex, #115ea3);
+  --color-primary-800: var(--primary-800-hex, var(--color-blue-800));
+  --color-primary-900: var(--primary-900-hex, var(--color-blue-900));
+  --color-primary-950: var(--primary-950-hex, var(--color-blue-950));
+
+  --color-surface-app: var(--app-bg, #fafaf9);
+  --color-surface-card: var(--surface-card, #ffffff);
+  --color-surface-subtle: var(--surface-card-subtle, #f5f5f4);
+  --color-surface-header: var(--header-bg, #ffffff);
+  --color-surface-sidebar: var(--sidebar-bg, #fcfbf9);
+  --color-border-theme: var(--border-default, #e2dfdb);
+  --color-border-subtle: var(--border-subtle, #f0eeec);
+
+  --color-ai-50: var(--color-violet-50);
+  --color-ai-100: var(--color-violet-100);
+  --color-ai-200: var(--color-violet-200);
+  --color-ai-500: var(--color-violet-500);
+  --color-ai-600: var(--color-violet-600);
+  --color-ai-700: var(--color-violet-700);
+  --color-ai-800: var(--color-violet-800);
+  --color-ai-900: var(--color-violet-900);
+
+  --color-success-50: var(--color-emerald-50);
+  --color-success-100: var(--color-emerald-100);
+  --color-success-200: var(--color-emerald-200);
+  --color-success-500: var(--color-emerald-500);
+  --color-success-600: var(--color-emerald-600);
+  --color-success-800: var(--color-emerald-800);
+  --color-success-900: var(--color-emerald-900);
+
+  --color-warning-50: var(--color-orange-50);
+  --color-warning-100: var(--color-orange-100);
+  --color-warning-200: var(--color-orange-200);
+  --color-warning-500: var(--color-orange-500);
+  --color-warning-600: var(--color-orange-600);
+  --color-warning-800: var(--color-orange-800);
+  --color-warning-900: var(--color-orange-900);
+
+  --color-danger-50: var(--color-rose-50);
+  --color-danger-100: var(--color-rose-100);
+  --color-danger-200: var(--color-rose-200);
+  --color-danger-500: var(--color-rose-500);
+  --color-danger-600: var(--color-rose-600);
+  --color-danger-800: var(--color-rose-800);
+  --color-danger-900: var(--color-rose-900);
+}
+
+@plugin "@tailwindcss/typography";
+@variant dark (&:where(.dark, .dark *));
+
+/* =========================================================================
+   CENTRAL DESIGN TOKENS & THEME ENGINE VARIABLES
+   ========================================================================= */
+
+/* Default Root & Light Theme: Clean Warm White */
+:root,
+html.theme-light {
+  --app-bg: #fafaf9;
+  --surface-card: #ffffff;
+  --surface-card-subtle: #f5f5f4;
+  --surface-card-hover: #f8f8f7;
+  --header-bg: #ffffff;
+  --header-border: #e7e5e4;
+  --sidebar-bg: #fcfbf9;
+  --sidebar-border: #e7e5e4;
+  --sidebar-item-hover: #f3f2f1;
+  --border-subtle: #f0eeec;
+  --border-default: #e2dfdb;
+  --border-strong: #cbd5e1;
+  --text-main: #1c1917;
+  --text-secondary: #44403c;
+  --text-muted: #78716c;
+  --primary-hex: #2563eb;
+  --primary-700-hex: #1d4ed8;
+  --primary-50-hex: #eff6ff;
+  --primary-100-hex: #dbeafe;
+  --primary-200-hex: #bfdbfe;
+  --primary-subtle-bg: #eff6ff;
+  --primary-subtle-text: #1e40af;
+  --primary-subtle-border: #bfdbfe;
+  --focus-ring: rgba(37, 99, 235, 0.25);
+  --scrollbar-thumb: #d6d3d1;
+  --scrollbar-thumb-hover: #a8a29e;
+}
+
+/* 1. Theme Emerald: White + Soft Mint Tint + Emerald Accent */
+html.theme-emerald {
+  --app-bg: #f4faf7;
+  --surface-card: #ffffff;
+  --surface-card-subtle: #eef7f3;
+  --surface-card-hover: #f2f9f5;
+  --header-bg: #ffffff;
+  --header-border: #d8ebe2;
+  --sidebar-bg: #f5fbf8;
+  --sidebar-border: #dbece3;
+  --sidebar-item-hover: #eaf5f0;
+  --border-subtle: #e1efe8;
+  --border-default: #cfe5dc;
+  --border-strong: #a7d6c3;
+  --text-main: #0f291e;
+  --text-secondary: #2d5545;
+  --text-muted: #527d6d;
+  --primary-hex: #059669;
+  --primary-700-hex: #047857;
+  --primary-50-hex: #ecfdf5;
+  --primary-100-hex: #d1fae5;
+  --primary-200-hex: #a7f3d0;
+  --primary-subtle-bg: #ecfdf5;
+  --primary-subtle-text: #065f46;
+  --primary-subtle-border: #a7f3d0;
+  --focus-ring: rgba(5, 150, 105, 0.25);
+  --scrollbar-thumb: #a7d6c3;
+  --scrollbar-thumb-hover: #059669;
+}
+
+/* 2. Theme Classic Blue: White + Soft Ice Blue Tint + Office Blue Accent */
+html.theme-classic-blue {
+  --app-bg: #f4f8fc;
+  --surface-card: #ffffff;
+  --surface-card-subtle: #edf4fa;
+  --surface-card-hover: #f0f6fb;
+  --header-bg: #ffffff;
+  --header-border: #dbe7f4;
+  --sidebar-bg: #f5f9fd;
+  --sidebar-border: #dbe7f4;
+  --sidebar-item-hover: #e8f1fb;
+  --border-subtle: #e2ecf7;
+  --border-default: #d0e1f2;
+  --border-strong: #abc8e8;
+  --text-main: #0f1d2e;
+  --text-secondary: #2d4765;
+  --text-muted: #506e90;
+  --primary-hex: #0f6cbd;
+  --primary-700-hex: #115ea3;
+  --primary-50-hex: #eff6ff;
+  --primary-100-hex: #dbeafe;
+  --primary-200-hex: #bfdbfe;
+  --primary-subtle-bg: #eff6ff;
+  --primary-subtle-text: #1e40af;
+  --primary-subtle-border: #bfdbfe;
+  --focus-ring: rgba(15, 108, 189, 0.25);
+  --scrollbar-thumb: #abc8e8;
+  --scrollbar-thumb-hover: #0f6cbd;
+}
+
+/* 3. Theme Warm Professional: Warm White + Light Ivory Tint + Calm Teal/Slate Accent */
+html.theme-warm {
+  --app-bg: #faf8f4;
+  --surface-card: #ffffff;
+  --surface-card-subtle: #f5f1e8;
+  --surface-card-hover: #f8f4ec;
+  --header-bg: #ffffff;
+  --header-border: #ece5d8;
+  --sidebar-bg: #fbf9f4;
+  --sidebar-border: #ece5d8;
+  --sidebar-item-hover: #f3eee4;
+  --border-subtle: #f0eae0;
+  --border-default: #e4dcd0;
+  --border-strong: #cdbfad;
+  --text-main: #27221d;
+  --text-secondary: #534a40;
+  --text-muted: #7c7163;
+  --primary-hex: #0d9488;
+  --primary-700-hex: #0f766e;
+  --primary-50-hex: #f0fdfa;
+  --primary-100-hex: #ccfbf1;
+  --primary-200-hex: #99f6e4;
+  --primary-subtle-bg: #f0fdfa;
+  --primary-subtle-text: #115e59;
+  --primary-subtle-border: #99f6e4;
+  --focus-ring: rgba(13, 148, 136, 0.25);
+  --scrollbar-thumb: #cdbfad;
+  --scrollbar-thumb-hover: #0d9488;
+}
+
+/* 4. Theme Dark / Professional Deep Navy: True Charcoal Navy + Rich Dark Surfaces */
+html.dark,
+html.theme-dark {
+  --app-bg: #0b1120;
+  --surface-card: #131d31;
+  --surface-card-subtle: #1a263f;
+  --surface-card-hover: #1e2c48;
+  --header-bg: #0e1626;
+  --header-border: #1e2c48;
+  --sidebar-bg: #0d1524;
+  --sidebar-border: #1e2c48;
+  --sidebar-item-hover: #18233a;
+  --border-subtle: #1a263f;
+  --border-default: #243350;
+  --border-strong: #33466b;
+  --text-main: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --primary-hex: #38bdf8;
+  --primary-700-hex: #0ea5e9;
+  --primary-50-hex: #111d33;
+  --primary-100-hex: #162a4d;
+  --primary-200-hex: #1d3b6e;
+  --primary-subtle-bg: #12233f;
+  --primary-subtle-text: #38bdf8;
+  --primary-subtle-border: #1e3a66;
+  --focus-ring: rgba(56, 189, 248, 0.25);
+  --scrollbar-thumb: #243350;
+  --scrollbar-thumb-hover: #38bdf8;
+}
+
+/* Dark mode accents for specific theme classes when in dark mode */
+html.dark.theme-emerald {
+  --primary-hex: #34d399;
+  --primary-700-hex: #10b981;
+  --primary-subtle-bg: #062d22;
+  --primary-subtle-text: #6ee7b7;
+  --primary-subtle-border: #0f5942;
+  --focus-ring: rgba(52, 211, 153, 0.25);
+}
+
+html.dark.theme-warm {
+  --primary-hex: #2dd4bf;
+  --primary-700-hex: #14b8a6;
+  --primary-subtle-bg: #082f2c;
+  --primary-subtle-text: #5eead4;
+  --primary-subtle-border: #115e59;
+  --focus-ring: rgba(45, 212, 191, 0.25);
+}
+
+html.dark.theme-classic-blue {
+  --primary-hex: #60a5fa;
+  --primary-700-hex: #3b82f6;
+  --primary-subtle-bg: #0f2b4c;
+  --primary-subtle-text: #93c5fd;
+  --primary-subtle-border: #1e3a66;
+  --focus-ring: rgba(96, 165, 250, 0.25);
+}
+
+/* Global Body and Layout Application */
+body {
+  background-color: var(--app-bg);
+  color: var(--text-main);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.app-header {
+  background-color: var(--header-bg) !important;
+  border-bottom: 1px solid var(--header-border) !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.app-sidebar {
+  background-color: var(--sidebar-bg) !important;
+  border-left: 1px solid var(--sidebar-border) !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-card {
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-default);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-card-subtle {
+  background-color: var(--surface-card-subtle);
+  border: 1px solid var(--border-subtle);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Force Left-To-Right direction on all math rendering elements to prevent Arabic RTL layout flipping */
+
+.katex,
+.katex *,
+.katex-display,
+.katex-display *,
+.katex-html,
+.katex-html *,
+[dir="ltr"] .katex,
+[dir="ltr"] .katex * {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+.katex {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
+  vertical-align: middle;
+}
+
+.katex .katex-mathml {
+  display: none !important;
+}
+
+.katex-display {
+  display: block !important;
+  text-align: center !important;
+  margin: 0.5em 0 !important;
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+}
+
+/* TipTap Editor Styles */
+.ProseMirror {
+  outline: none;
+  font-size: 12pt;
+  font-family: 'Times New Roman', Times, serif;
+}
+.ProseMirror p {
+  margin-top: 0;
+  margin-bottom: 0.4em;
+  font-size: 12pt;
+  line-height: 1.5;
+}
+
+/* Paragraph spacing overrides across editors, previews, and print sheets */
+.prose p,
+.prose-sm p,
+.math-text-container p,
+.a4-print-sheet p {
+  margin-top: 0 !important;
+}
+
+.prose p:not([style*="margin-bottom"]),
+.prose-sm p:not([style*="margin-bottom"]),
+.ProseMirror p:not([style*="margin-bottom"]),
+.math-text-container p:not([style*="margin-bottom"]) {
+  margin-bottom: 0.4em;
+}
+
+p[style*="margin-bottom: 0pt"],
+p[style*="margin-bottom: 0px"],
+p[data-paragraph-spacing="0pt"],
+div[data-paragraph-spacing="0pt"],
+*[style*="margin-bottom: 0pt"],
+*[style*="margin-bottom: 0px"] {
+  margin-top: 0 !important;
+  margin-bottom: 0pt !important;
+}
+
+p[style*="margin-bottom: 2pt"],
+p[data-paragraph-spacing="2pt"],
+*[style*="margin-bottom: 2pt"] {
+  margin-top: 0 !important;
+  margin-bottom: 2pt !important;
+}
+.ProseMirror table, .prose table, .math-text-container table {
+  border-collapse: separate; border-spacing: 0;
+  table-layout: fixed;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+.ProseMirror table td,
+.ProseMirror table th, .prose table th, .math-text-container table th {
+  min-width: 1em;
+  border: 1px solid #cbd5e1;
+  padding: 3px 5px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+}
+.dark .ProseMirror table td,
+.dark .ProseMirror table th, .prose table th, .math-text-container table th {
+  border-color: #334155;
+}
+.ProseMirror table th, .prose table th, .math-text-container table th {
+  font-weight: bold;
+  text-align: left;
+  background-color: #f1f5f9;
+}
+.dark .ProseMirror table th, .prose table th, .math-text-container table th {
+  background-color: #1e293b;
+}
+.ProseMirror table .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background-color: #3b82f6;
+  pointer-events: none;
+}
+.ProseMirror img, .prose img, .math-text-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+/* Ensure any element marked with dir="ltr" is strictly rendered LTR without affecting surrounding RTL text */
+[dir="ltr"],
+.ProseMirror [dir="ltr"],
+.math-text-container [dir="ltr"] {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+}
+
+
+/* ==========================================================================
+   Centralized List & Numbering Engine (RTL / LTR BiDi Compliant)
+   ========================================================================== */
+
+/* Custom Counter Style for Arabic Abjad (أ، ب، ج، د...) */
+@counter-style arabic-abjad {
+  system: alphabetic;
+  symbols: 'أ' 'ب' 'ج' 'د' 'هـ' 'و' 'ز' 'ح' 'ط' 'ي' 'ك' 'ل' 'م' 'ن' 'س' 'ع' 'ف' 'ص' 'ق' 'ر' 'ش' 'ت' 'ث' 'خ' 'ذ' 'ض' 'ظ' 'غ';
+  suffix: ' ';
+}
+
+/* 1. Base List Containers */
+.prose ul, .ProseMirror ul, .math-text-container ul, .a4-print-sheet ul,
+.prose ol, .ProseMirror ol, .math-text-container ol, .a4-print-sheet ol {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.5rem !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-position: outside !important;
+  box-sizing: border-box !important;
+}
+
+/* RTL List Container (Default / Arabic) */
+.prose ul:not([dir="ltr"]), .ProseMirror ul:not([dir="ltr"]), .math-text-container ul:not([dir="ltr"]), .a4-print-sheet ul:not([dir="ltr"]),
+.prose ol:not([dir="ltr"]), .ProseMirror ol:not([dir="ltr"]), .math-text-container ol:not([dir="ltr"]), .a4-print-sheet ol:not([dir="ltr"]),
+[dir="rtl"] ul, [dir="rtl"] ol, ul[dir="rtl"], ol[dir="rtl"] {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: isolate !important;
+}
+
+/* LTR List Container (English / Math) */
+.prose ul[dir="ltr"], .ProseMirror ul[dir="ltr"], .math-text-container ul[dir="ltr"], .a4-print-sheet ul[dir="ltr"],
+.prose ol[dir="ltr"], .ProseMirror ol[dir="ltr"], .math-text-container ol[dir="ltr"], .a4-print-sheet ol[dir="ltr"],
+[dir="ltr"] ul:not([dir="rtl"]), [dir="ltr"] ol:not([dir="rtl"]) {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate !important;
+}
+
+/* 2. Base List Items (Self-contained Indentation & Alignment per Item) */
+.prose li, .ProseMirror li, .math-text-container li, .a4-print-sheet li {
+  position: relative !important;
+  line-height: 1.6 !important;
+  min-height: 1.5em !important;
+  margin-top: 0.15rem !important;
+  margin-bottom: 0.15rem !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  list-style: none !important;
+  list-style-type: none !important;
+  unicode-bidi: isolate !important;
+  box-sizing: border-box !important;
+}
+
+/* RTL List Items (Padding on the RIGHT, Marker at right: 0) */
+.prose li:not([dir="ltr"]), .ProseMirror li:not([dir="ltr"]), .math-text-container li:not([dir="ltr"]), .a4-print-sheet li:not([dir="ltr"]),
+li[dir="rtl"], [dir="rtl"] li:not([dir="ltr"]), ul:not([dir="ltr"]) > li:not([dir="ltr"]), ol:not([dir="ltr"]) > li:not([dir="ltr"]) {
+  direction: rtl !important;
+  text-align: right !important;
+  padding-right: 2rem !important;
+  padding-left: 0 !important;
+}
+
+/* LTR List Items (Padding on the LEFT, Marker at left: 0) */
+.prose li[dir="ltr"], .ProseMirror li[dir="ltr"], .math-text-container li[dir="ltr"], .a4-print-sheet li[dir="ltr"],
+li[dir="ltr"], [dir="ltr"] li:not([dir="rtl"]), ul[dir="ltr"] > li:not([dir="rtl"]), ol[dir="ltr"] > li:not([dir="rtl"]) {
+  direction: ltr !important;
+  text-align: left !important;
+  padding-left: 2rem !important;
+  padding-right: 0 !important;
+}
+
+/* Nested Lists (Sub-levels / Multi-level indentation) */
+.prose ul ul, .prose ul ol, .prose ol ul, .prose ol ol,
+.ProseMirror ul ul, .ProseMirror ul ol, .ProseMirror ol ul, .ProseMirror ol ol,
+.math-text-container ul ul, .math-text-container ul ol, .math-text-container ol ul, .math-text-container ol ol,
+.a4-print-sheet ul ul, .a4-print-sheet ul ol, .a4-print-sheet ol ul, .a4-print-sheet ol ol {
+  margin-top: 0.15rem !important;
+  margin-bottom: 0.15rem !important;
+  padding: 0 !important;
+}
+
+/* Automatic Indentation for nested lists to prevent overlapping with text */
+.prose *:not([dir="ltr"]) > ul, .prose *:not([dir="ltr"]) > ol,
+.ProseMirror *:not([dir="ltr"]) > ul, .ProseMirror *:not([dir="ltr"]) > ol,
+.math-text-container *:not([dir="ltr"]) > ul, .math-text-container *:not([dir="ltr"]) > ol,
+.a4-print-sheet *:not([dir="ltr"]) > ul, .a4-print-sheet *:not([dir="ltr"]) > ol,
+ul:not([dir="ltr"]) ul, ul:not([dir="ltr"]) ol, ol:not([dir="ltr"]) ul, ol:not([dir="ltr"]) ol {
+  margin-right: 1.5rem !important;
+  margin-left: 0 !important;
+}
+
+.prose [dir="ltr"] > ul, .prose [dir="ltr"] > ol,
+.ProseMirror [dir="ltr"] > ul, .ProseMirror [dir="ltr"] > ol,
+.math-text-container [dir="ltr"] > ul, .math-text-container [dir="ltr"] > ol,
+.a4-print-sheet [dir="ltr"] > ul, .a4-print-sheet [dir="ltr"] > ol,
+ul[dir="ltr"] ul, ul[dir="ltr"] ol, ol[dir="ltr"] ul, ol[dir="ltr"] ol {
+  margin-left: 1.5rem !important;
+  margin-right: 0 !important;
+}
+
+/* Paragraphs & direct block children inside List Item */
+.prose li > p, .ProseMirror li > p, .math-text-container li > p, .a4-print-sheet li > p,
+.prose li > div, .ProseMirror li > div, .math-text-container li > div, .a4-print-sheet li > div {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  display: block !important;
+  unicode-bidi: isolate !important;
+}
+
+/* 3. Base Marker Pseudo-Element (Marker placed inside dedicated padding box) */
+.prose ul > li::before, .ProseMirror ul > li::before, .math-text-container ul > li::before, .a4-print-sheet ul > li::before,
+.prose ol > li::before, .ProseMirror ol > li::before, .math-text-container ol > li::before, .a4-print-sheet ol > li::before {
+  position: absolute !important;
+  top: 0 !important;
+  height: 1.6em !important;
+  width: 1.75rem !important;
+  font-weight: 600 !important;
+  font-variant-numeric: tabular-nums !important;
+  color: currentColor !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  line-height: 1.6 !important;
+  unicode-bidi: isolate !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+}
+
+/* RTL Markers: Bullet / Number at right: 0, immediately right of text on the exact same line */
+.prose ul:not([dir="ltr"]) > li:not([dir="ltr"])::before, .ProseMirror ul:not([dir="ltr"]) > li:not([dir="ltr"])::before,
+.math-text-container ul:not([dir="ltr"]) > li:not([dir="ltr"])::before, .a4-print-sheet ul:not([dir="ltr"]) > li:not([dir="ltr"])::before,
+.prose ol:not([dir="ltr"]) > li:not([dir="ltr"])::before, .ProseMirror ol:not([dir="ltr"]) > li:not([dir="ltr"])::before,
+.math-text-container ol:not([dir="ltr"]) > li:not([dir="ltr"])::before, .a4-print-sheet ol:not([dir="ltr"]) > li:not([dir="ltr"])::before,
+ul[dir="rtl"] > li::before, ol[dir="rtl"] > li::before,
+[dir="rtl"] ul > li::before, [dir="rtl"] ol > li::before,
+li[dir="rtl"]::before {
+  right: 0 !important;
+  left: auto !important;
+  direction: rtl !important;
+  text-align: right !important;
+  display: inline-flex !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+/* LTR Markers: Bullet / Number at left: 0, immediately left of text on the exact same line */
+.prose ul[dir="ltr"] > li::before, .ProseMirror ul[dir="ltr"] > li::before,
+.math-text-container ul[dir="ltr"] > li::before, .a4-print-sheet ul[dir="ltr"] > li::before,
+.prose ol[dir="ltr"] > li::before, .ProseMirror ol[dir="ltr"] > li::before,
+.math-text-container ol[dir="ltr"] > li::before, .a4-print-sheet ol[dir="ltr"] > li::before,
+[dir="ltr"] ul:not([dir="rtl"]) > li::before, [dir="ltr"] ol:not([dir="rtl"]) > li::before,
+li[dir="ltr"]::before {
+  left: 0 !important;
+  right: auto !important;
+  direction: ltr !important;
+  text-align: left !important;
+  display: inline-flex !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+/* 4. Unordered Bullet Lists - Symbol Mappings */
+.prose ul > li::before, .ProseMirror ul > li::before, .math-text-container ul > li::before, .a4-print-sheet ul > li::before {
+  content: var(--list-style, "•\00a0") !important;
+}
+
+.prose ul[data-list-style="disc"] > li::before, .ProseMirror ul[data-list-style="disc"] > li::before, .math-text-container ul[data-list-style="disc"] > li::before, .a4-print-sheet ul[data-list-style="disc"] > li::before,
+.prose ul[data-list-style="•"] > li::before, .ProseMirror ul[data-list-style="•"] > li::before, .math-text-container ul[data-list-style="•"] > li::before, .a4-print-sheet ul[data-list-style="•"] > li::before {
+  content: "•\00a0" !important;
+}
+
+.prose ul[data-list-style="circle"] > li::before, .ProseMirror ul[data-list-style="circle"] > li::before, .math-text-container ul[data-list-style="circle"] > li::before, .a4-print-sheet ul[data-list-style="circle"] > li::before,
+.prose ul[data-list-style="○"] > li::before, .ProseMirror ul[data-list-style="○"] > li::before, .math-text-container ul[data-list-style="○"] > li::before, .a4-print-sheet ul[data-list-style="○"] > li::before {
+  content: "○\00a0" !important;
+}
+
+.prose ul[data-list-style="square"] > li::before, .ProseMirror ul[data-list-style="square"] > li::before, .math-text-container ul[data-list-style="square"] > li::before, .a4-print-sheet ul[data-list-style="square"] > li::before,
+.prose ul[data-list-style="■"] > li::before, .ProseMirror ul[data-list-style="■"] > li::before, .math-text-container ul[data-list-style="■"] > li::before, .a4-print-sheet ul[data-list-style="■"] > li::before {
+  content: "■\00a0" !important;
+}
+
+.prose ul[data-list-style="white-square"] > li::before, .ProseMirror ul[data-list-style="white-square"] > li::before, .math-text-container ul[data-list-style="white-square"] > li::before, .a4-print-sheet ul[data-list-style="white-square"] > li::before,
+.prose ul[data-list-style="□"] > li::before, .ProseMirror ul[data-list-style="□"] > li::before, .math-text-container ul[data-list-style="□"] > li::before, .a4-print-sheet ul[data-list-style="□"] > li::before {
+  content: "□\00a0" !important;
+}
+
+.prose ul[data-list-style="diamond"] > li::before, .ProseMirror ul[data-list-style="diamond"] > li::before, .math-text-container ul[data-list-style="diamond"] > li::before, .a4-print-sheet ul[data-list-style="diamond"] > li::before,
+.prose ul[data-list-style="◆"] > li::before, .ProseMirror ul[data-list-style="◆"] > li::before, .math-text-container ul[data-list-style="◆"] > li::before, .a4-print-sheet ul[data-list-style="◆"] > li::before {
+  content: "◆\00a0" !important;
+}
+
+.prose ul[data-list-style="white-diamond"] > li::before, .ProseMirror ul[data-list-style="white-diamond"] > li::before, .math-text-container ul[data-list-style="white-diamond"] > li::before, .a4-print-sheet ul[data-list-style="white-diamond"] > li::before,
+.prose ul[data-list-style="◇"] > li::before, .ProseMirror ul[data-list-style="◇"] > li::before, .math-text-container ul[data-list-style="◇"] > li::before, .a4-print-sheet ul[data-list-style="◇"] > li::before {
+  content: "◇\00a0" !important;
+}
+
+.prose ul[data-list-style="star"] > li::before, .ProseMirror ul[data-list-style="star"] > li::before, .math-text-container ul[data-list-style="star"] > li::before, .a4-print-sheet ul[data-list-style="star"] > li::before,
+.prose ul[data-list-style="★"] > li::before, .ProseMirror ul[data-list-style="★"] > li::before, .math-text-container ul[data-list-style="★"] > li::before, .a4-print-sheet ul[data-list-style="★"] > li::before {
+  content: "★\00a0" !important;
+}
+
+.prose ul[data-list-style="white-star"] > li::before, .ProseMirror ul[data-list-style="white-star"] > li::before, .math-text-container ul[data-list-style="white-star"] > li::before, .a4-print-sheet ul[data-list-style="white-star"] > li::before,
+.prose ul[data-list-style="☆"] > li::before, .ProseMirror ul[data-list-style="☆"] > li::before, .math-text-container ul[data-list-style="☆"] > li::before, .a4-print-sheet ul[data-list-style="☆"] > li::before {
+  content: "☆\00a0" !important;
+}
+
+.prose ul[data-list-style="check"] > li::before, .ProseMirror ul[data-list-style="check"] > li::before, .math-text-container ul[data-list-style="check"] > li::before, .a4-print-sheet ul[data-list-style="check"] > li::before,
+.prose ul[data-list-style="✓"] > li::before, .ProseMirror ul[data-list-style="✓"] > li::before, .math-text-container ul[data-list-style="✓"] > li::before, .a4-print-sheet ul[data-list-style="✓"] > li::before {
+  content: "✓\00a0" !important;
+}
+
+.prose ul[data-list-style="heavy-check"] > li::before, .ProseMirror ul[data-list-style="heavy-check"] > li::before, .math-text-container ul[data-list-style="heavy-check"] > li::before, .a4-print-sheet ul[data-list-style="heavy-check"] > li::before,
+.prose ul[data-list-style="✔"] > li::before, .ProseMirror ul[data-list-style="✔"] > li::before, .math-text-container ul[data-list-style="✔"] > li::before, .a4-print-sheet ul[data-list-style="✔"] > li::before {
+  content: "✔\00a0" !important;
+}
+
+.prose ul[data-list-style="arrow"] > li::before, .ProseMirror ul[data-list-style="arrow"] > li::before, .math-text-container ul[data-list-style="arrow"] > li::before, .a4-print-sheet ul[data-list-style="arrow"] > li::before,
+.prose ul[data-list-style="➤"] > li::before, .ProseMirror ul[data-list-style="➤"] > li::before, .math-text-container ul[data-list-style="➤"] > li::before, .a4-print-sheet ul[data-list-style="➤"] > li::before {
+  content: "➤\00a0" !important;
+}
+
+.prose ul[data-list-style="blue-diamond"] > li::before, .ProseMirror ul[data-list-style="blue-diamond"] > li::before, .math-text-container ul[data-list-style="blue-diamond"] > li::before, .a4-print-sheet ul[data-list-style="blue-diamond"] > li::before,
+.prose ul[data-list-style="🔹"] > li::before, .ProseMirror ul[data-list-style="🔹"] > li::before, .math-text-container ul[data-list-style="🔹"] > li::before, .a4-print-sheet ul[data-list-style="🔹"] > li::before {
+  content: "🔹\00a0" !important;
+}
+
+.prose ul[data-list-style="bulb"] > li::before, .ProseMirror ul[data-list-style="bulb"] > li::before, .math-text-container ul[data-list-style="bulb"] > li::before, .a4-print-sheet ul[data-list-style="bulb"] > li::before,
+.prose ul[data-list-style="💡"] > li::before, .ProseMirror ul[data-list-style="💡"] > li::before, .math-text-container ul[data-list-style="💡"] > li::before, .a4-print-sheet ul[data-list-style="💡"] > li::before {
+  content: "💡\00a0" !important;
+}
+
+.prose ul[data-list-style="pin"] > li::before, .ProseMirror ul[data-list-style="pin"] > li::before, .math-text-container ul[data-list-style="pin"] > li::before, .a4-print-sheet ul[data-list-style="pin"] > li::before,
+.prose ul[data-list-style="📌"] > li::before, .ProseMirror ul[data-list-style="📌"] > li::before, .math-text-container ul[data-list-style="📌"] > li::before, .a4-print-sheet ul[data-list-style="📌"] > li::before {
+  content: "📌\00a0" !important;
+}
+
+/* Legacy data-bullet-symbol support */
+.prose ul[data-bullet-symbol] > li::before, .ProseMirror ul[data-bullet-symbol] > li::before, .math-text-container ul[data-bullet-symbol] > li::before, .a4-print-sheet ul[data-bullet-symbol] > li::before {
+  content: var(--list-style, "•\00a0") !important;
+}
+
+/* 5. Ordered Numbered Lists - Counter & Formats */
+.prose ol, .ProseMirror ol, .math-text-container ol, .a4-print-sheet ol {
+  counter-reset: custom-counter;
+}
+
+.prose ol > li, .ProseMirror ol > li, .math-text-container ol > li, .a4-print-sheet ol > li {
+  counter-increment: custom-counter;
+}
+
+/* Default Decimal (1. 2. 3.) */
+.prose ol > li::before, .ProseMirror ol > li::before, .math-text-container ol > li::before, .a4-print-sheet ol > li::before,
+.prose ol[data-list-style="decimal"] > li::before, .ProseMirror ol[data-list-style="decimal"] > li::before, .math-text-container ol[data-list-style="decimal"] > li::before, .a4-print-sheet ol[data-list-style="decimal"] > li::before {
+  content: counter(custom-counter) ".\00a0" !important;
+}
+
+/* Decimal Parenthesis: 1) 2) 3) */
+.prose ol[data-list-style="decimal-paren"] > li::before, .ProseMirror ol[data-list-style="decimal-paren"] > li::before, .math-text-container ol[data-list-style="decimal-paren"] > li::before, .a4-print-sheet ol[data-list-style="decimal-paren"] > li::before {
+  content: counter(custom-counter) ")\00a0" !important;
+}
+
+/* Decimal Dash: 1- 2- 3- */
+.prose ol[data-list-style="decimal-dash"] > li::before, .ProseMirror ol[data-list-style="decimal-dash"] > li::before, .math-text-container ol[data-list-style="decimal-dash"] > li::before, .a4-print-sheet ol[data-list-style="decimal-dash"] > li::before {
+  content: counter(custom-counter) "-\00a0" !important;
+}
+
+/* Arabic Abjad: أ. ب. ج. */
+.prose ol[data-list-style="arabic-abjad"] > li::before, .ProseMirror ol[data-list-style="arabic-abjad"] > li::before, .math-text-container ol[data-list-style="arabic-abjad"] > li::before, .a4-print-sheet ol[data-list-style="arabic-abjad"] > li::before {
+  content: counter(custom-counter, arabic-abjad) ".\00a0" !important;
+}
+
+/* Arabic Abjad Parenthesis: أ) ب) ج) */
+.prose ol[data-list-style="arabic-abjad-paren"] > li::before, .ProseMirror ol[data-list-style="arabic-abjad-paren"] > li::before, .math-text-container ol[data-list-style="arabic-abjad-paren"] > li::before, .a4-print-sheet ol[data-list-style="arabic-abjad-paren"] > li::before {
+  content: counter(custom-counter, arabic-abjad) ")\00a0" !important;
+}
+
+/* Arabic Abjad Dash: أ- ب- ج- */
+.prose ol[data-list-style="arabic-abjad-dash"] > li::before, .ProseMirror ol[data-list-style="arabic-abjad-dash"] > li::before, .math-text-container ol[data-list-style="arabic-abjad-dash"] > li::before, .a4-print-sheet ol[data-list-style="arabic-abjad-dash"] > li::before {
+  content: counter(custom-counter, arabic-abjad) "-\00a0" !important;
+}
+
+/* Uppercase Latin: A. B. C. */
+.prose ol[data-list-style="upper-alpha"] > li::before, .ProseMirror ol[data-list-style="upper-alpha"] > li::before, .math-text-container ol[data-list-style="upper-alpha"] > li::before, .a4-print-sheet ol[data-list-style="upper-alpha"] > li::before {
+  content: counter(custom-counter, upper-alpha) ".\00a0" !important;
+}
+
+/* Lowercase Latin: a. b. c. */
+.prose ol[data-list-style="lower-alpha"] > li::before, .ProseMirror ol[data-list-style="lower-alpha"] > li::before, .math-text-container ol[data-list-style="lower-alpha"] > li::before, .a4-print-sheet ol[data-list-style="lower-alpha"] > li::before {
+  content: counter(custom-counter, lower-alpha) ".\00a0" !important;
+}
+
+/* Uppercase Roman: I. II. III. */
+.prose ol[data-list-style="upper-roman"] > li::before, .ProseMirror ol[data-list-style="upper-roman"] > li::before, .math-text-container ol[data-list-style="upper-roman"] > li::before, .a4-print-sheet ol[data-list-style="upper-roman"] > li::before {
+  content: counter(custom-counter, upper-roman) ".\00a0" !important;
+}
+
+/* Lowercase Roman: i. ii. iii. */
+.prose ol[data-list-style="lower-roman"] > li::before, .ProseMirror ol[data-list-style="lower-roman"] > li::before, .math-text-container ol[data-list-style="lower-roman"] > li::before, .a4-print-sheet ol[data-list-style="lower-roman"] > li::before {
+  content: counter(custom-counter, lower-roman) ".\00a0" !important;
+}
+
+/* Circled Numbers ① ② ③ */
+.prose ol[data-list-style="circled"] > li::before, .ProseMirror ol[data-list-style="circled"] > li::before, .math-text-container ol[data-list-style="circled"] > li::before, .a4-print-sheet ol[data-list-style="circled"] > li::before {
+  content: counter(custom-counter) !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  border-radius: 9999px !important;
+  border: 1.5px solid currentColor !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  top: 0.15rem !important;
+}
+
+/* Filled Circled Numbers ❶ ❷ ❸ */
+.prose ol[data-list-style="circled-filled"] > li::before, .ProseMirror ol[data-list-style="circled-filled"] > li::before, .math-text-container ol[data-list-style="circled-filled"] > li::before, .a4-print-sheet ol[data-list-style="circled-filled"] > li::before {
+  content: counter(custom-counter) !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  border-radius: 9999px !important;
+  background-color: currentColor !important;
+  color: #ffffff !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  top: 0.15rem !important;
+}
+
+
+
+/* 3. Tables */
+.prose table, .ProseMirror table, .math-text-container table {
+  margin-top: 0 !important;
+  margin-bottom: 8pt !important;
+  border-collapse: separate !important; border-spacing: 0 !important;
+  table-layout: fixed !important;
+  width: 100% !important;
+}
+
+.prose td, .prose th, .ProseMirror td, .ProseMirror th, .math-text-container td, .math-text-container th {
+  padding: 4px 8px !important;
+  border: 1px solid #cbd5e1 !important;
+  vertical-align: top !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  min-width: 1em !important;
+}
+
+.dark .prose td, .dark .prose th, .dark .ProseMirror td, .dark .ProseMirror th, .dark .math-text-container td, .dark .math-text-container th {
+  border-color: #334155 !important;
+}
+
+.prose th, .ProseMirror th, .math-text-container th {
+  font-weight: bold !important;
+  text-align: right !important;
+  background-color: #f1f5f9 !important;
+}
+
+[dir="ltr"] .prose th, [dir="ltr"] .ProseMirror th, [dir="ltr"] .math-text-container th {
+  text-align: left !important;
+}
+
+.dark .prose th, .dark .ProseMirror th, .dark .math-text-container th {
+  background-color: #1e293b !important;
+}
+
+
+/* 4. Table Cell Overrides */
+.prose td.selectedCell, .prose th.selectedCell, .ProseMirror td.selectedCell, .ProseMirror th.selectedCell {
+  background-color: rgba(99, 102, 241, 0.2) !important;
+  border-color: rgba(99, 102, 241, 0.5) !important;
+}
+
+.prose td p, .prose th p, .ProseMirror td p, .ProseMirror th p, .math-text-container td p, .math-text-container th p, .a4-print-sheet td p, .a4-print-sheet th p {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+
+
+/* Remove margins from lists and list items inside tables */
+.prose td ul, .prose td ol, .ProseMirror td ul, .ProseMirror td ol, .math-text-container td ul, .math-text-container td ol, .a4-print-sheet td ul, .a4-print-sheet td ol {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+.prose td li, .ProseMirror td li, .math-text-container td li, .a4-print-sheet td li {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Ensure empty paragraphs or breaks don't blow up table rows */
+.prose td p:empty, .ProseMirror td p:empty, .math-text-container td p:empty, .a4-print-sheet td p:empty {
+  display: none !important;
+}
+
+/* Force compact line-height in tables for preview and print */
+.prose table, .ProseMirror table, .math-text-container table, .a4-print-sheet table {
+  line-height: 1.2 !important;
+}
+
+/* Print Overrides to Ensure PDF matches Preview with optimal A4 space utilization */
+@media print {
+  .a4-print-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    line-height: 1.2 !important;
+  }
+
+  .a4-print-sheet .exam-question-item,
+  .a4-print-sheet .question-renderer-block,
+  .a4-print-sheet .question-block {
+    margin-top: 1px !important;
+    margin-bottom: 2px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .a4-print-sheet .question-header-row,
+  .a4-print-sheet .question-prompt-container,
+  .a4-print-sheet .question-text-node {
+    line-height: 1.2 !important;
+  }
+
+  .a4-print-sheet .question-prompt-container p,
+  .a4-print-sheet .question-text-node p,
+  .a4-print-sheet .math-text-container p,
+  .a4-print-sheet .prose p {
+    margin-top: 0 !important;
+    margin-bottom: 0px !important;
+  line-height: 1.2 !important;
+  }
+
+  .a4-print-sheet .question-mcq-options {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    margin-top: 1px !important;
+    margin-bottom: 2px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .a4-print-sheet .question-mcq-options table {
+    margin-top: 1px !important;
+    margin-bottom: 1px !important;
+    border-collapse: separate !important; border-spacing: 0 !important;
+    table-layout: fixed !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .a4-print-sheet .question-mcq-options tbody,
+  .a4-print-sheet .question-mcq-options tr {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .a4-print-sheet .question-mcq-options td {
+    padding-top: 2.5px !important;
+    padding-bottom: 2.5px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    vertical-align: middle !important;
+    line-height: 1.2 !important;
+    overflow: visible !important;
+  }
+
+  .a4-print-sheet .question-mcq-options td > div {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    align-items: center !important;
+    overflow: visible !important;
+  }
+
+  .a4-print-sheet .question-mcq-options .mcq-option-content {
+    line-height: 1.2 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    white-space: normal !important;
+  }
+
+  .a4-print-sheet .question-mcq-options .katex-display,
+  .a4-print-sheet .question-mcq-options .katex,
+  .a4-print-sheet .question-mcq-options .katex-html {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: visible !important;
+  }
+
+  .a4-print-sheet .question-tf-options {
+    padding-top: 2px !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+    line-height: 1.2 !important;
+  }
+
+  .a4-print-sheet .question-matching-container {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    margin-top: 1px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .a4-print-sheet .question-matching-container table td,
+  .a4-print-sheet .question-matching-container table th {
+    padding: 2px 4px !important;
+    line-height: 1.2 !important;
+    height: auto !important;
+  }
+
+  .a4-print-sheet .question-ordering-container {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    margin-top: 1px !important;
+    margin-bottom: 2px !important;
+    line-height: 1.2 !important;
+  }
+
+  .a4-print-sheet .question-ordering-container > div {
+    margin-bottom: 2px !important;
+  }
+
+  .a4-print-sheet [id*="section-"][id*="-header"],
+  .a4-print-sheet .exam-section-header {
+    margin-top: 4px !important;
+    margin-bottom: 3px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+  }
+
+  .a4-print-sheet [id="header-title"] > div,
+  .a4-print-sheet #header-title > div {
+    margin-top: 1px !important;
+    margin-bottom: 2px !important;
+    padding-bottom: 2px !important;
+  }
+
+  .a4-print-sheet [id="header-student-box"] > div,
+  .a4-print-sheet #header-student-box > div,
+  .a4-print-sheet .student-info-box {
+    margin-top: 2px !important;
+    margin-bottom: 3px !important;
+    padding: 4px 8px !important;
+  }
+
+  .a4-print-sheet [id="header-instructions"] > div,
+  .a4-print-sheet #header-instructions > div {
+    margin-top: 3px !important;
+    margin-bottom: 3px !important;
+    padding: 4px 8px !important;
+  }
+
+  .a4-print-sheet [id="header-grading-table"] > div,
+  .a4-print-sheet #header-grading-table > div {
+    margin-top: 2px !important;
+    margin-bottom: 3px !important;
+  }
+
+  .a4-print-sheet [id="header-grading-table"] table td,
+  .a4-print-sheet [id="header-grading-table"] table th {
+    padding: 1.5px 3px !important;
+    line-height: 1.15 !important;
+  }
+
+  .a4-print-sheet .print-document-header {
+    padding-bottom: 3px !important;
+    margin-bottom: 5px !important;
+  }
+}
+
+/* Exact same density for PDF Export Stage & Cloned Sheets (.pdf-print-density / #pdf-export-isolation-stage) */
+#pdf-export-isolation-stage,
+#pdf-export-isolation-stage .a4-print-sheet,
+.pdf-print-density,
+.a4-print-sheet, .a4-print-sheet,
+.pdf-export-sheet {
+  line-height: 1.2 !important;
+}
+
+#pdf-export-isolation-stage .exam-question-item,
+#pdf-export-isolation-stage .question-renderer-block,
+#pdf-export-isolation-stage .question-block,
+.pdf-print-density .exam-question-item,
+.a4-print-sheet .exam-question-item,
+.pdf-print-density .question-renderer-block,
+.a4-print-sheet .question-renderer-block,
+.pdf-print-density .question-block,
+.a4-print-sheet .question-block {
+  margin-top: 1px !important;
+  margin-bottom: 2px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+#pdf-export-isolation-stage .question-header-row,
+#pdf-export-isolation-stage .question-prompt-container,
+#pdf-export-isolation-stage .question-text-node,
+.pdf-print-density .question-header-row,
+.a4-print-sheet .question-header-row,
+.pdf-print-density .question-prompt-container,
+.a4-print-sheet .question-prompt-container,
+.pdf-print-density .question-text-node,
+.a4-print-sheet .question-text-node {
+  line-height: 1.2 !important;
+}
+
+#pdf-export-isolation-stage .question-prompt-container p,
+#pdf-export-isolation-stage .question-text-node p,
+#pdf-export-isolation-stage .math-text-container p,
+#pdf-export-isolation-stage .prose p,
+.pdf-print-density .question-prompt-container p,
+.a4-print-sheet .question-prompt-container p,
+.pdf-print-density .question-text-node p,
+.a4-print-sheet .question-text-node p,
+.pdf-print-density .math-text-container p,
+.a4-print-sheet .math-text-container p,
+.pdf-print-density .prose p,
+.a4-print-sheet .prose p {
+  margin-top: 0 !important;
+  margin-bottom: 0px !important;
+  line-height: 1.2 !important;
+}
+
+#pdf-export-isolation-stage .question-mcq-options,
+.pdf-print-density .question-mcq-options,
+.a4-print-sheet .question-mcq-options {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  margin-top: 1px !important;
+  margin-bottom: 2px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+#pdf-export-isolation-stage .question-mcq-options table,
+.pdf-print-density .question-mcq-options table,
+.a4-print-sheet .question-mcq-options table {
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+  border-collapse: separate !important; border-spacing: 0 !important;
+  table-layout: fixed !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+#pdf-export-isolation-stage .question-mcq-options tbody,
+#pdf-export-isolation-stage .question-mcq-options tr,
+.pdf-print-density .question-mcq-options tbody,
+.a4-print-sheet .question-mcq-options tbody,
+.pdf-print-density .question-mcq-options tr,
+.a4-print-sheet .question-mcq-options tr {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+#pdf-export-isolation-stage .question-mcq-options td,
+.pdf-print-density .question-mcq-options td,
+.a4-print-sheet .question-mcq-options td {
+  padding-top: 2.5px !important;
+  padding-bottom: 2.5px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  vertical-align: middle !important;
+  line-height: 1.2 !important;
+  overflow: visible !important;
+}
+
+#pdf-export-isolation-stage .question-mcq-options td > div,
+.pdf-print-density .question-mcq-options td > div,
+.a4-print-sheet .question-mcq-options td > div {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  align-items: center !important;
+  overflow: visible !important;
+}
+
+#pdf-export-isolation-stage .question-mcq-options .mcq-option-content,
+.pdf-print-density .question-mcq-options .mcq-option-content,
+.a4-print-sheet .question-mcq-options .mcq-option-content {
+  line-height: 1.2 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+
+#pdf-export-isolation-stage .question-mcq-options .katex-display,
+#pdf-export-isolation-stage .question-mcq-options .katex,
+#pdf-export-isolation-stage .question-mcq-options .katex-html,
+.pdf-print-density .question-mcq-options .katex-display,
+.a4-print-sheet .question-mcq-options .katex-display,
+.pdf-print-density .question-mcq-options .katex,
+.a4-print-sheet .question-mcq-options .katex,
+.pdf-print-density .question-mcq-options .katex-html,
+.a4-print-sheet .question-mcq-options .katex-html {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  overflow: visible !important;
+}
+
+#pdf-export-isolation-stage .question-tf-options,
+.pdf-print-density .question-tf-options,
+.a4-print-sheet .question-tf-options {
+  padding-top: 2px !important;
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+  line-height: 1.2 !important;
+}
+
+#pdf-export-isolation-stage .question-matching-container,
+.pdf-print-density .question-matching-container,
+.a4-print-sheet .question-matching-container {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  margin-top: 1px !important;
+  margin-bottom: 2px !important;
+}
+
+#pdf-export-isolation-stage .question-matching-container table td,
+#pdf-export-isolation-stage .question-matching-container table th,
+.pdf-print-density .question-matching-container table td,
+.a4-print-sheet .question-matching-container table td,
+.pdf-print-density .question-matching-container table th,
+.a4-print-sheet .question-matching-container table th {
+  padding: 2px 4px !important;
+  line-height: 1.2 !important;
+  height: auto !important;
+}
+
+#pdf-export-isolation-stage .question-ordering-container,
+.pdf-print-density .question-ordering-container,
+.a4-print-sheet .question-ordering-container {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  margin-top: 1px !important;
+  margin-bottom: 2px !important;
+  line-height: 1.2 !important;
+}
+
+#pdf-export-isolation-stage .question-ordering-container > div,
+.pdf-print-density .question-ordering-container > div,
+.a4-print-sheet .question-ordering-container > div {
+  margin-bottom: 2px !important;
+}
+
+#pdf-export-isolation-stage [id*="section-"][id*="-header"],
+#pdf-export-isolation-stage .exam-section-header,
+.pdf-print-density [id*="section-"][id*="-header"],
+.a4-print-sheet [id*="section-"][id*="-header"],
+.pdf-print-density .exam-section-header,
+.a4-print-sheet .exam-section-header {
+  margin-top: 4px !important;
+  margin-bottom: 3px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+#pdf-export-isolation-stage [id="header-title"] > div,
+#pdf-export-isolation-stage #header-title > div,
+.pdf-print-density [id="header-title"] > div,
+.a4-print-sheet [id="header-title"] > div,
+.pdf-print-density #header-title > div,
+.a4-print-sheet #header-title > div {
+  margin-top: 1px !important;
+  margin-bottom: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+#pdf-export-isolation-stage [id="header-student-box"] > div,
+#pdf-export-isolation-stage #header-student-box > div,
+#pdf-export-isolation-stage .student-info-box,
+.pdf-print-density [id="header-student-box"] > div,
+.a4-print-sheet [id="header-student-box"] > div,
+.pdf-print-density #header-student-box > div,
+.a4-print-sheet #header-student-box > div,
+.pdf-print-density .student-info-box,
+.a4-print-sheet .student-info-box {
+  margin-top: 2px !important;
+  margin-bottom: 3px !important;
+  padding: 4px 8px !important;
+}
+
+#pdf-export-isolation-stage [id="header-instructions"] > div,
+#pdf-export-isolation-stage #header-instructions > div,
+.pdf-print-density [id="header-instructions"] > div,
+.a4-print-sheet [id="header-instructions"] > div,
+.pdf-print-density #header-instructions > div,
+.a4-print-sheet #header-instructions > div {
+  margin-top: 3px !important;
+  margin-bottom: 3px !important;
+  padding: 4px 8px !important;
+}
+
+#pdf-export-isolation-stage [id="header-grading-table"] > div,
+#pdf-export-isolation-stage #header-grading-table > div,
+.pdf-print-density [id="header-grading-table"] > div,
+.a4-print-sheet [id="header-grading-table"] > div,
+.pdf-print-density #header-grading-table > div,
+.a4-print-sheet #header-grading-table > div {
+  margin-top: 2px !important;
+  margin-bottom: 3px !important;
+}
+
+#pdf-export-isolation-stage [id="header-grading-table"] table td,
+#pdf-export-isolation-stage [id="header-grading-table"] table th,
+.pdf-print-density [id="header-grading-table"] table td,
+.a4-print-sheet [id="header-grading-table"] table td,
+.pdf-print-density [id="header-grading-table"] table th,
+.a4-print-sheet [id="header-grading-table"] table th {
+  padding: 1.5px 3px !important;
+  line-height: 1.15 !important;
+}
+
+#pdf-export-isolation-stage .print-document-header,
+.pdf-print-density .print-document-header,
+.a4-print-sheet .print-document-header {
+  padding-bottom: 3px !important;
+  margin-bottom: 5px !important;
+}
+
+
+/* Remove large margins and padding from math blocks inside tables */
+.prose td .my-2.p-2, .ProseMirror td .my-2.p-2, .math-text-container td .my-2.p-2, .a4-print-sheet td .my-2.p-2 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0.1rem !important;
+  padding-bottom: 0.1rem !important;
+}
+
+/* Hide raw math source */
+.hidden-math-text {
+  display: none !important;
+}
+.math-raw-source {
+  display: none !important;
+}
+
+/* =========================================================================
+   Universal Word Wrapping & Overflow-X Prevention for Editors & Previews
+   ========================================================================= */
+.ProseMirror {
+  outline: none !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  box-sizing: border-box !important;
+}
+
+.ProseMirror p, 
+.ProseMirror div, 
+.ProseMirror h1, 
+.ProseMirror h2, 
+.ProseMirror h3, 
+.ProseMirror h4, 
+.ProseMirror h5, 
+.ProseMirror h6, 
+.ProseMirror blockquote, 
+.ProseMirror ul, 
+.ProseMirror ol, 
+.ProseMirror li {
+  max-width: 100% !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  box-sizing: border-box !important;
+}
+
+.math-text-container, 
+.math-text-container p, 
+.math-text-container div, 
+.math-text-container span,
+.math-text-container li {
+  max-width: 100% !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  box-sizing: border-box !important;
+}
+
+/* Scrollable math equation blocks when an equation is wider than container, with vertical clearance */
+.katex-display, .math-block-wrapper {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  padding-top: 4px !important;
+  padding-bottom: 8px !important;
+  scrollbar-width: thin;
+}
+
+.katex-display > .katex {
+  display: inline-block !important;
+  padding-top: 2px !important;
+  padding-bottom: 6px !important;
+  overflow: visible !important;
+}
+
+.katex-html {
+  overflow: visible !important;
+  padding-bottom: 2px !important;
+}
+
+/* =========================================================================
+   Centralized Question Renderer & Numbering Integrity
+   ========================================================================= */
+.exam-question-item,
+.question-renderer-block {
+  unicode-bidi: isolate;
+}
+
+/* Question sub-blocks avoid internal breaking while allowing question and answer key to flow naturally */
+.question-prompt-container,
+.question-options-container,
+.question-tf-options,
+.question-matching-container,
+.question-ordering-container {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+@media print {
+  .question-prompt-container,
+  .question-options-container,
+  .question-tf-options,
+  .question-matching-container,
+  .question-ordering-container {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .model-answer-box {
+    background-color: #f3e8ff !important;
+    color: #3b0764 !important;
+    border: 2px solid #c084fc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* Ensure the question number and the first line of text align on the same baseline */
+.question-prompt-container {
+  align-items: baseline !important;
+}
+
+.question-number-badge {
+  white-space: nowrap !important;
+  line-height: inherit !important;
+  vertical-align: baseline !important;
+}
+
+/* Ensure the first paragraph inside MathText has zero top-margin so it does not drop below the number */
+.question-prompt-text > .math-text-container > p:first-child,
+.question-prompt-text > .math-text-container > div:first-child,
+.question-prompt-text > p:first-child,
+.question-prompt-text p:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.25rem !important;
+  display: inline;
+}
+
+/* 
+  Fix trailing empty paragraphs/blank blocks taking up unnecessary vertical space 
+  Applies to: OCR, AI inserts, paste artifacts, and general rich text editors 
+  It hides trailing empty paragraphs, but reveals them if the editor is focused 
+  so the user can still type on the new line. 
+*/
+.ProseMirror:not(:focus-within) > p:last-child:empty:not(:first-child),
+.ProseMirror:not(:focus-within) > p:last-child:has(> br:only-child):not(:first-child),
+.ProseMirror:not(:focus-within) > p:last-child > br:only-child {
+  display: none;
+}
+
+/* Ensure empty paragraphs inside preview cards also do not take up space */
+.preview-content > p:last-child:empty,
+.preview-content > p:last-child:has(> br:only-child) {
+  display: none;
+}
+
+.question-prompt-text > .math-text-container {
+  display: inline;
+}
+
+.question-prompt-text > .math-text-container > * {
+  display: inline;
+}
+
+.question-prompt-text > .math-text-container > .my-2,
+.question-prompt-text > .math-text-container > .block {
+  display: block;
+  margin-top: 0.25rem !important;
+}
+
+/* 
+  Fix equations globally in preview, print, and PDF:
+  Clean, borderless, transparent without blue frames or hover boxes
+*/
+.a4-print-sheet .math-rendered-block,
+.a4-print-sheet .math-rendered-inline,
+.a4-preview-container .math-rendered-block,
+.a4-preview-container .math-rendered-inline,
+.preview-content .math-rendered-block,
+.preview-content .math-rendered-inline,
+.print-document .math-rendered-block,
+.print-document .math-rendered-inline,
+.question-renderer-block .math-rendered-block,
+.question-renderer-block .math-rendered-inline,
+.exam-question-item .math-rendered-block,
+.exam-question-item .math-rendered-inline,
+[data-preview="true"] .math-rendered-block,
+[data-preview="true"] .math-rendered-inline,
+.ProseMirror td .math-rendered-block,
+.ProseMirror th .math-rendered-block,
+.ProseMirror td .math-rendered-inline,
+.ProseMirror th .math-rendered-inline,
+.preview-content td .math-rendered-block,
+.preview-content th .math-rendered-block,
+.preview-content td .math-rendered-inline,
+.preview-content th .math-rendered-inline,
+table td .math-rendered-block,
+table th .math-rendered-block,
+table td .math-rendered-inline,
+table th .math-rendered-inline {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
+  cursor: default !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.a4-print-sheet .math-rendered-block:hover,
+.a4-print-sheet .math-rendered-inline:hover,
+.a4-preview-container .math-rendered-block:hover,
+.a4-preview-container .math-rendered-inline:hover,
+.preview-content .math-rendered-block:hover,
+.preview-content .math-rendered-inline:hover,
+.print-document .math-rendered-block:hover,
+.print-document .math-rendered-inline:hover,
+.question-renderer-block .math-rendered-block:hover,
+.question-renderer-block .math-rendered-inline:hover,
+[data-preview="true"] .math-rendered-block:hover,
+[data-preview="true"] .math-rendered-inline:hover,
+.ProseMirror td .math-rendered-block:hover,
+.ProseMirror th .math-rendered-block:hover,
+.ProseMirror td .math-rendered-inline:hover,
+.ProseMirror th .math-rendered-inline:hover,
+table td .math-rendered-block:hover,
+table th .math-rendered-block:hover,
+table td .math-rendered-inline:hover,
+table th .math-rendered-inline:hover {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Hide edit hints and editor buttons in preview, print, and PDF */
+.a4-print-sheet span[class*="group-hover"],
+.a4-print-sheet .editor-only-hint,
+.a4-preview-container span[class*="group-hover"],
+.a4-preview-container .editor-only-hint,
+.preview-content span[class*="group-hover"],
+.preview-content .editor-only-hint,
+.print-document span[class*="group-hover"],
+.print-document .editor-only-hint {
+  display: none !important;
+}
+
+/* MathText block container transparent inside print and preview */
+.a4-print-sheet .math-text-container > div,
+.a4-preview-container .math-text-container > div,
+.preview-content .math-text-container > div,
+.print-document .math-text-container > div,
+.question-renderer-block .math-text-container > div,
+td .math-text-container .my-2.p-2.rounded-lg,
+th .math-text-container .my-2.p-2.rounded-lg {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Eliminate hover outline/border changes on cards in preview/print */
+.a4-print-sheet [class*="hover:border"]:hover,
+.a4-preview-container [class*="hover:border"]:hover,
+.preview-content [class*="hover:border"]:hover,
+.print-document [class*="hover:border"]:hover {
+  border-color: inherit !important;
+}
+
+/* Hide all buttons, inputs, edit controls, and no-print elements in print sheets and PDF exports */
+.a4-print-sheet button,
+.a4-print-sheet [role="button"],
+.a4-print-sheet .no-print,
+.a4-print-sheet .no-pdf,
+.a4-print-sheet [class*="print:hidden"],
+.a4-print-sheet [data-no-print="true"],
+.a4-print-sheet .editor-only-hint,
+.print-document button,
+.print-document [role="button"],
+.print-document .no-print,
+.print-document .no-pdf,
+.print-document [class*="print:hidden"] {
+  display: none !important;
+}
+
+.ProseMirror td .math-rendered-block > *,
+.ProseMirror th .math-rendered-block > *,
+.preview-content td .math-rendered-block > *,
+.preview-content th .math-rendered-block > *,
+table td .math-rendered-block > *,
+table th .math-rendered-block > * {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-block !important;
+}
+
+/* Ensure the Katex equation fits within the cell and doesn't add extra vertical space */
+td .katex-display,
+th .katex-display {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-block !important;
+}
+
+table td > p, table th > p {
+  margin-bottom: 0 !important;
+}
+
+/* =========================================================================
+   MCQ Options Table & Formula Proportional Auto-Fit Styles
+   ========================================================================= */
+.question-mcq-options {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  margin-top: 1px !important;
+  margin-bottom: 2px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.question-mcq-options::-webkit-scrollbar {
+  display: none !important;
+}
+
+.question-mcq-options table {
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: separate !important; border-spacing: 0 !important;
+  margin: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.question-mcq-options tbody,
+.question-mcq-options tr {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.question-mcq-options td {
+  height: auto !important;
+  min-height: 0 !important;
+  vertical-align: middle !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  white-space: normal !important;
+  box-sizing: border-box !important;
+  padding-top: 2.5px !important;
+  padding-bottom: 2.5px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  line-height: 1.2 !important;
+}
+
+.question-mcq-options td > div {
+  height: auto !important;
+  min-height: 0 !important;
+  align-items: center !important;
+}
+
+.question-mcq-options .mcq-option-content {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  white-space: normal !important;
+  overflow: visible !important;
+}
+
+/* Ensure math formulas inside MCQ options scale proportionally within the cell */
+.question-mcq-options .katex-display,
+.question-mcq-options .math-block-wrapper {
+  max-width: 100% !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-block !important;
+  scrollbar-width: none !important;
+}
+
+.question-mcq-options .katex {
+  max-width: 100% !important;
+  font-size: min(1em, 100%) !important;
+  vertical-align: middle !important;
+}
+
+.question-mcq-options .katex-html {
+  max-width: 100% !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+
+.question-mcq-options img,
+.question-mcq-options svg {
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: inline-block !important;
+}
+
+@media print {
+  .question-mcq-options {
+    overflow: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    scrollbar-width: none !important;
+  }
+  .question-mcq-options table {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: separate !important; border-spacing: 0 !important;
+  }
+  .question-mcq-options tr,
+  .question-mcq-options td {
+    height: auto !important;
+    overflow: visible !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    white-space: normal !important;
+  }
+  .question-mcq-options .katex-display,
+  .question-mcq-options .math-block-wrapper,
+  .question-mcq-options .katex {
+    max-width: 100% !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+}
+
+
+
+
+/* Math Selection Styles */
+.math-selected {
+  background-color: rgba(191, 219, 254, 0.7) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5) !important;
+  border-color: transparent !important;
+}
+.math-selected .katex {
+  color: #1e3a8a !important;
+}
+.dark .math-selected {
+  background-color: rgba(30, 58, 138, 0.7) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5) !important;
+}
+.dark .math-selected .katex {
+  color: #bfdbfe !important;
+}
+
+
+/* Override line-height for lists in print sheet */
+.a4-print-sheet li, .pdf-print-density li, .a4-print-sheet ul > li::before, .a4-print-sheet ol > li::before, .pdf-print-density ul > li::before, .pdf-print-density ol > li::before {
+  line-height: 1.2 !important;
+  min-height: 1.2em !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+
+/* Override ALL paragraph margins in print sheet to be perfectly compact */
+.a4-print-sheet p, .pdf-print-density p {
+  margin-bottom: 0px !important;
+  margin-top: 0px !important;
+  line-height: 1.2 !important;
+}
+
+
+/* Override math block margins in print sheet to be perfectly compact */
+.a4-print-sheet .katex-display, .pdf-print-density .katex-display, .a4-print-sheet .math-block-wrapper, .pdf-print-density .math-block-wrapper {
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+.a4-print-sheet .katex-display > .katex, .pdf-print-density .katex-display > .katex {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+
+/* Override MathText block wrapper margins in print sheet to be perfectly compact */
+.a4-print-sheet .my-2\.5, .pdf-print-density .my-2\.5 {
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+.a4-print-sheet .py-3\.5, .pdf-print-density .py-3\.5 {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+
+/* Ensure math blocks have tight margins in print */
+.a4-print-sheet .math-rendered-block, .pdf-print-density .math-rendered-block, .a4-print-sheet .math-text-container .my-2\.5, .pdf-print-density .math-text-container .my-2\.5, .a4-print-sheet [class*="math"], .pdf-print-density [class*="math"] {
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+.a4-print-sheet .katex-display, .pdf-print-density .katex-display {
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+.a4-print-sheet .katex-display > .katex, .pdf-print-density .katex-display > .katex {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+
+/* Ensure empty paragraphs take no space in print sheet */
+.a4-print-sheet p:empty, .pdf-print-density p:empty, .a4-print-sheet p:has(> br:only-child), .pdf-print-density p:has(> br:only-child) {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
+}
+
+
+/* Override question item margins in print sheet to be perfectly compact */
+.a4-print-sheet .exam-question-item, .pdf-print-density .exam-question-item {
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+/* AGGRESSIVE PRINT MATH FIXES */
+@media print {
+  .math-rendered-block, .katex-display, .math-block-wrapper, .my-2\.5 {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .katex-display > .katex {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  p {
+    margin-bottom: 0 !important;
+  }
+}
+.a4-print-sheet .math-rendered-block,
+.pdf-print-density .math-rendered-block,
+.a4-print-sheet .katex-display,
+.pdf-print-density .katex-display,
+.a4-print-sheet .math-block-wrapper,
+.pdf-print-density .math-block-wrapper,
+.a4-print-sheet .my-2\.5,
+.pdf-print-density .my-2\.5 {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.a4-print-sheet .katex-display > .katex,
+.pdf-print-density .katex-display > .katex {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.a4-print-sheet p,
+.pdf-print-density p {
+  margin-bottom: 0 !important;
+}
+
+/* COMPACT PRINT MATH REFINEMENTS */
+@media print {
+  /* Reduce spacing between paragraphs inside question text */
+  .a4-print-sheet .question-text-node p,
+  .a4-print-sheet .question-prompt-text p {
+    margin-bottom: 0.35rem !important;
+  }
+
+  /* Ensure math blocks are strictly block-level to avoid horizontal stacking, but compact */
+  .a4-print-sheet .math-block-wrapper-preview,
+  .a4-print-sheet .math-rendered-block {
+    display: block !important;
+    margin-top: 0.35rem !important;
+    margin-bottom: 0.35rem !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .a4-print-sheet .katex-display {
+    margin: 0.25rem 0 !important;
+  }
+  
+  /* Reset inline katex so they don't break */
+  .a4-print-sheet .katex {
+    line-height: inherit;
+  }
+}

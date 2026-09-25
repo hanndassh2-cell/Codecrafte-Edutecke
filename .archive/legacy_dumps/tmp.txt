@@ -1,0 +1,10 @@
+                                      updated[idx].textColor = e.target.value;
+                                      setCustomSections(updated);
+                                    }}
+                                    className="w-5 h-5 rounded cursor-pointer border border-slate-300 dark:border-slate-700 p-0 bg-transparent"
+                                    title="�                              <div>
+                                <label className="block font-bold text-slate-600 dark:text-slate-400 mb-0.5">
+                                  درجة السؤال:
+                                </label>
+                                <input
+                                  type="number"

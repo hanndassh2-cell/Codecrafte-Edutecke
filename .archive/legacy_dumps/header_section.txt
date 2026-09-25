@@ -1,0 +1,211 @@
+2121-      onDragOver={(e) => handleDragOver(e, index)}
+2122-      onDragEnd={handleDragEnd}
+2123-      className={`transition-all duration-150 overflow-visible flex flex-col group cursor-text relative my-1.5 rounded-md ${
+2124-        isDragged
+2125-          ? "opacity-50 border-2 border-blue-400 border-dashed"
+2126-          : isActive
+2127-            ? "bg-white dark:bg-slate-900 border border-blue-500/70 shadow-2xs ring-1 ring-blue-500/15"
+2128-            : "bg-transparent border border-transparent hover:border-slate-200/80 dark:hover:border-slate-800/80 hover:bg-slate-50/30 dark:hover:bg-slate-800/10"
+2129-      }`}
+2130-    >
+2131:      {/* Right Margin Word Selection Strip (هامش التحديد المباشر) */}
+2132-      <div
+2133-        onClick={(e) => {
+2134-          e.stopPropagation();
+2135-          setActiveParagraphId(p.id);
+2136-        }}
+2137-        className={`absolute right-0 top-0 bottom-0 w-1 rounded-r-md transition-colors cursor-pointer z-20 ${
+2138-          isActive
+2139-            ? "bg-blue-600 dark:bg-blue-500"
+2140-            : "bg-transparent hover:bg-blue-400/30"
+2141-        }`}
+2142-        title="تحديد الفقرة من الهامش الأيمن"
+2143-      />
+2144-      <div
+2145-        className={`px-3 py-1 flex items-center justify-between cursor-move transition-all sticky top-0 z-10 rounded-t-md backdrop-blur-md ${
+2146-          isActive
+2147-            ? "bg-slate-50/90 dark:bg-slate-800/70 border-b border-slate-200/80 dark:border-slate-700/80"
+2148-            : "bg-slate-50/50 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800/40 opacity-0 group-hover:opacity-100"
+2149-        }`}
+2150-      >
+2151-        <div className="flex items-center gap-2 w-full">
+2152-          <div className="p-0.5 text-slate-400 dark:text-slate-500 transition" title="سحب الفقرة">
+2153-            <GripVertical className="w-3.5 h-3.5" />
+2154-          </div>
+2155-          <div
+2156-            className={`p-1 rounded-md bg-white dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 text-blue-600 dark:text-blue-400 flex-shrink-0 ${p.customColor || cardInfo.color}`}
+2157-          >
+2158-            <Icon className="w-3.5 h-3.5" />
+2159-          </div>
+2160-          <div className="flex flex-col flex-1 min-w-0">
+2161-            <input
+2162-              type="text"
+2163-              value={p.title}
+2164-              onChange={(e) =>
+2165-                updateParagraph(p.id, "title", e.target.value)
+2166-              }
+2167-              disabled={isLocked}
+2168-              className={`font-bold text-xs text-slate-700 dark:text-slate-200 bg-transparent border-none focus:outline-none focus:ring-0 p-0 w-full ${isLocked ? "opacity-70 cursor-not-allowed" : ""}`}
+2169-              placeholder="عنوان قسم المستند..."
+2170-            />
+2171-            {guideText && (
+2172-              <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 leading-normal font-normal">
+2173-                {guideText}
+2174-              </span>
+2175-            )}
+2176-          </div>
+2177-        </div>
+2178-
+2179-        {/* Section Tools - Visible on Active/Hover */}
+2180-        <div className="flex items-center gap-1 shrink-0 relative">
+2181-          <button
+2182-            onClick={(e) => { e.stopPropagation(); setShowAISolver(true); }}
+2183-            className="p-1.5 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-md transition text-indigo-500 cursor-pointer flex items-center gap-1"
+2184-            title="مساعد الذكاء الاصطناعي"
+2185-          >
+2186-            <Sparkles className="w-3.5 h-3.5" />
+2187-            <span className="text-[10px] font-bold hidden sm:inline">AI</span>
+2188-          </button>
+2189-          
+2190-          <button
+2191-            onClick={(e) => { e.stopPropagation(); setIsLocked(!isLocked); }}
+2192-            className={`p-1.5 rounded-md transition cursor-pointer ${isLocked ? "bg-red-100 text-red-600 dark:bg-red-900/40" : "hover:bg-black/5 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400"}`}
+2193-            title={isLocked ? "إلغاء القفل" : "قفل التعديل"}
+2194-          >
+2195-            {isLocked ? <Lock className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5 opacity-50" />}
+2196-          </button>
+2197-          
+2198-          <button
+2199-            onClick={(e) => { e.stopPropagation(); toggleCollapse(p.id); }}
+2200-            className="p-1.5 hover:bg-black/5 dark:hover:bg-white/10 rounded-md transition text-slate-500 dark:text-slate-400 cursor-pointer"
+2201-            title={isCollapsed ? "توسيع" : "طي"}
+2202-          >
+2203-            {isCollapsed ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
+2204-          </button>
+2205-
+2206-          {/* Context Menu Toggle */}
+2207-          <div className="relative">
+2208-            <button
+2209-              onClick={(e) => { e.stopPropagation(); setIsMoreMenuOpen(!isMoreMenuOpen); }}
+2210-              className="p-1.5 hover:bg-black/5 dark:hover:bg-white/10 rounded-md transition text-slate-500 dark:text-slate-400 cursor-pointer"
+2211-            >
+2212-              <MoreVertical className="w-3.5 h-3.5" />
+2213-            </button>
+2214-
+2215-            {isMoreMenuOpen && (
+2216-              <>
+2217-                <div 
+2218-                  className="fixed inset-0 z-40" 
+2219-                  onClick={(e) => { e.stopPropagation(); setIsMoreMenuOpen(false); }}
+2220-                ></div>
+2221-                <div className="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 py-1 flex flex-col z-50">
+2222-                  <button
+2223-                    onClick={(e) => { e.stopPropagation(); updateParagraph(p.id, "isVisible", p.isVisible === false ? true : false); setIsMoreMenuOpen(false); }}
+2224-                    className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-right"
+2225-                  >
+2226-                    {p.isVisible !== false ? <EyeOff className="w-4 h-4 text-slate-400" /> : <Eye className="w-4 h-4 text-emerald-500" />}
+2227-                    <span className="font-bold">{p.isVisible !== false ? "إخفاء القسم" : "إظهار القسم"}</span>
+2228-                  </button>
+2229-
+2230-                  <button
+2231-                    onClick={(e) => { e.stopPropagation(); updateParagraph(p.id, "forceBreakAfter", !p.forceBreakAfter); setIsMoreMenuOpen(false); }}
+2232-                    className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-right"
+2233-                  >
+2234-                    <BetweenVerticalEnd className={`w-4 h-4 ${p.forceBreakAfter ? 'text-rose-500' : 'text-slate-400'}`} />
+2235-                    <span className="font-bold">فاصل صفحة مجبر</span>
+2236-                  </button>
+2237-                  
+2238-                  <div className="h-px bg-slate-100 dark:bg-slate-800 my-1"></div>
+2239-
+2240-                  {moveParagraph && (
+2241-                    <>
+2242-                      <button
+2243-                        onClick={(e) => { e.stopPropagation(); moveParagraph(p.id, "up"); setIsMoreMenuOpen(false); }}
+2244-                        disabled={index === 0}
+2245-                        className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-right disabled:opacity-50"
+2246-                      >
+2247-                        <ArrowUp className="w-4 h-4 text-slate-400" />
+2248-                        <span className="font-bold">تحريك لأعلى</span>
+2249-                      </button>
+2250-
+2251-                      <button
+2252-                        onClick={(e) => { e.stopPropagation(); moveParagraph(p.id, "down"); setIsMoreMenuOpen(false); }}
+2253-                        disabled={index >= totalCards - 1}
+2254-                        className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-right disabled:opacity-50"
+2255-                      >
+2256-                        <ArrowDown className="w-4 h-4 text-slate-400" />
+2257-                        <span className="font-bold">تحريك لأسفل</span>
+2258-                      </button>
+2259-
+2260-                      <div className="h-px bg-slate-100 dark:bg-slate-800 my-1"></div>
+2261-                    </>
+2262-                  )}
+2263-
+2264-                  <button
+2265-                    onClick={(e) => { e.stopPropagation(); duplicateParagraph?.(p.id); setIsMoreMenuOpen(false); }}
+2266-                    className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-right"
+2267-                  >
+2268-                    <Copy className="w-4 h-4 text-slate-400" />
+2269-                    <span className="font-bold">تكرار</span>
+2270-                  </button>
+2271-
+2272-                  <button
+2273-                    onClick={(e) => { e.stopPropagation(); deleteParagraph(p.id); setIsMoreMenuOpen(false); }}
+2274-                    className="w-full flex items-center gap-3 px-3 py-2 text-sm text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors text-right"
+2275-                  >
+2276-                    <Trash2 className="w-4 h-4 text-rose-500" />
+2277-                    <span className="font-bold">حذف</span>
+2278-                  </button>
+2279-                </div>
+2280-              </>
+2281-            )}
+2282-          </div>
+2283-        </div>
+2284-      </div>
+2285-      
+2286-      {showSettings && (
+2287-        <div className="p-4 bg-slate-50 dark:bg-slate-800/90 border-b border-slate-200 dark:border-slate-700 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs font-bold animate-in slide-in-from-top-2 duration-200">
+2288-            {/* 1. Change Card Type */}
+2289-            <div>
+2290-              <label className="block text-slate-500 dark:text-slate-400 mb-1.5">نوع البطاقة</label>
+2291-              <select
+2292-                value={p.type}
+2293-                disabled={isLocked}
+2294-                onChange={(e) => {
+2295-                  const newType = e.target.value;
+2296-                  const newCardInfo = cardTypesList.find((c: any) => c.type === newType);
+2297-                  updateParagraph(p.id, "type", newType);
+2298-                  if (newCardInfo) {
+2299-                    updateParagraph(p.id, "title", newCardInfo.label);
+2300-                  }
+2301-                }}
+2302-                className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 shadow-2xs cursor-pointer"
+2303-              >
+2304-                {cardTypesList.map((c: any) => (
+2305-                  <option key={c.type} value={c.type}>{c.label}</option>
+2306-                ))}
+2307-              </select>
+2308-            </div>
+2309-
+2310-            {/* 2. Card Background Color */}
+2311-            <div>
+2312-              <label className="block text-slate-500 dark:text-slate-400 mb-1.5">لون البطاقة</label>
+2313-              <div className="flex items-center gap-1.5 flex-wrap">
+2314-                {[
+2315-                  { name: "أزرق", val: "bg-blue-50 text-blue-600 border-blue-200" },
+2316-                  { name: "أخضر", val: "bg-emerald-50 text-emerald-600 border-emerald-200" },
+2317-                  { name: "أحمر", val: "bg-rose-50 text-rose-600 border-rose-200" },
+2318-                  { name: "أصفر", val: "bg-amber-50 text-amber-600 border-amber-200" },
+2319-                  { name: "بنفسجي", val: "bg-purple-50 text-purple-600 border-purple-200" },
+2320-                  { name: "رمادي", val: "bg-slate-50 text-slate-700 border-slate-200" },
+2321-                ].map((colorObj) => (
+2322-                  <button
+2323-                    key={colorObj.val}
+2324-                    onClick={() => updateParagraph(p.id, "customColor", colorObj.val)}
+2325-                    className={`w-6 h-6 rounded-full border-2 transition-all cursor-pointer ${colorObj.val.split(" ")[0]} ${
+2326-                      p.customColor === colorObj.val ? "ring-2 ring-blue-500 scale-110 border-blue-600" : "border-slate-300 dark:border-slate-600 hover:scale-105"
+2327-                    }`}
+2328-                    title={colorObj.name}
+2329-                  />
+2330-                ))}
+2331-              </div>

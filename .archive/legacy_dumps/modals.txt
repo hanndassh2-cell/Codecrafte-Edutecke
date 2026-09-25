@@ -1,0 +1,1123 @@
+      {showNewTemplatePrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl max-w-sm w-full p-6 border border-slate-200 dark:border-slate-800">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">حفظ كقالب جديد</h3>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              أدخل اسم القالب الجديد:
+            </label>
+            <input 
+              type="text" 
+              value={newTemplateName}
+              onChange={(e) => setNewTemplateName(e.target.value)}
+              className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none mb-6"
+              autoFocus
+            />
+            <div className="flex items-center justify-end gap-3">
+              <button 
+                onClick={() => setShowNewTemplatePrompt(false)}
+                className="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              >
+                إلغاء
+              </button>
+              <button 
+                onClick={confirmSaveNewTemplate}
+                className="px-4 py-2 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
+              >
+                حفظ القالب
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Top Bar Navigation & Actions */}
+      <div className="w-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/50 rounded-2xl p-4 flex items-center justify-between shadow-xs">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-800/50 flex items-center justify-center">
+            <Layout className="w-5 h-5 text-blue-600 dark:text-blue-300" />
+          </div>
+          <div>
+            <h2 className="text-sm font-black text-blue-900 dark:text-blue-100">تأليف وإعداد الدرس</h2>
+            <p className="text-xs font-medium text-blue-700 dark:text-blue-300 mt-0.5">
+              محرر احترافي لتأليف الدرس وترتيب الفقرات والأسئلة ومعاينته بقالب A4 قبل التصدير.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      {/* Top Bar Navigation & Actions */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xs">
+        <div className="flex items-start gap-4">
+          <button
+            onClick={onBack}
+            className="mt-1 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition shadow-xs"
+            title="رجوع لشجرة المنهاج"
+            type="button"
+          >
+            <ArrowRight className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+          </button>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
+              {currentSubject?.name || "المادة غير محددة"}
+            </span>
+            <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
+              {currentUnit?.title || "الوحدة غير محددة"}
+            </span>
+            <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+              {currentLesson?.title || "الدرس غير محدد"}
+            </h1>
+          </div>
+        </div>
+        
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 w-full lg:w-auto mt-4 md:mt-0">
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value as any)}
+            className="flex-1 sm:flex-none min-w-[180px] text-sm font-bold px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all shadow-xs"
+          >
+            <option value="draft">مسودة (Draft)</option>
+            <option value="review">قيد المراجعة (In Review)</option>
+            <option value="approved">معتمد رسمياً (Approved)</option>
+          </select>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={handlePrint}
+              className="flex-1 sm:flex-none justify-center px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white font-bold text-sm shadow-xs transition flex items-center gap-2"
+            >
+              <Printer className="w-4 h-4" />
+              <span>طباعة A4</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleSave}
+              className="flex-1 sm:flex-none justify-center px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-xs transition flex items-center gap-2"
+            >
+              <CheckCircle2 className="w-4 h-4" />
+              <span>حفظ التعديلات</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left Side: Editor Controls (6 cols) */}
+        <div className="lg:col-span-6 space-y-5">
+          {/* A4 Page Layout & Margin Config */}
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xs overflow-hidden">
+            <button
+              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+              className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition"
+            >
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Layout className="w-4 h-4 text-blue-600" />
+                <span>إعدادات صفحة الدرس (A4 Settings)</span>
+              </h3>
+              {isSettingsOpen ? (
+                <ChevronUp className="w-4 h-4 text-slate-500" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-slate-500" />
+              )}
+            </button>
+            {isSettingsOpen && (
+              <div className="flex flex-col">
+              {/* Template Selector */}
+              <div className="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 space-y-3">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-blue-600" />
+                  <span>القالب الحالي:</span>
+                </h3>
+                <div className="flex gap-2 items-center">
+                  <select
+                    className="flex-1 p-3 text-sm font-bold rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
+                    value={activeTemplate.id}
+                    onChange={(e) => {
+                      const allTmpls = storage.getPrintTemplates();
+                      const tmpl = allTmpls.find(t => t.id === e.target.value);
+                      if (tmpl) setActiveTemplate(tmpl);
+                    }}
+                  >
+                    {storage.getPrintTemplates().map(t => (
+                      <option key={t.id} value={t.id}>{t.name}</option>
+                    ))}
+                  </select>
+                  <>
+                      <button 
+                        type="button"
+                        onClick={() => {
+                          setNewTemplateName(activeTemplate.name);
+                          setShowEditTemplatePrompt(true);
+                        }}
+                        className="p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition shadow-xs" 
+                        title="تعديل اسم القالب"
+                      >
+                        <Edit2 className="w-4 h-4 text-slate-600 dark:text-slate-300" />
+                      </button>
+                      <button 
+                        type="button"
+                        onClick={() => {
+                          if(activeTemplate.id === 'tmpl-1' || activeTemplate.id === 'tmpl-def') {
+                            showToast("لا يمكن حذف القالب الافتراضي!");
+                            return;
+                          }
+                          setShowDeleteTemplateConfirm(true);
+                        }}
+                        className="p-3 rounded-xl border border-red-200 dark:border-red-900/30 bg-red-50 dark:bg-red-900/10 hover:bg-red-100 dark:hover:bg-red-900/30 transition shadow-xs" 
+                        title="حذف القالب"
+                      >
+                        <Trash2 className="w-4 h-4 text-red-600 dark:text-red-400" />
+                      </button>
+                    </>
+                </div>
+              </div>
+              <div className="p-0 border-t border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row">
+                <div className="sm:w-1/3 bg-slate-50 dark:bg-slate-800/40 p-3 flex flex-col gap-1 border-b sm:border-b-0 sm:border-l border-slate-200 dark:border-slate-700">
+
+                  <button onClick={() => setSettingsTab('margins')} className={`text-right px-3 py-2 text-xs font-bold rounded-lg transition ${settingsTab === 'margins' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300' : 'text-slate-600 hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800'}`}>الهوامش والأبعاد</button>
+                  <button onClick={() => setSettingsTab('headerFooter')} className={`text-right px-3 py-2 text-xs font-bold rounded-lg transition ${settingsTab === 'headerFooter' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300' : 'text-slate-600 hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800'}`}>الرأس والتذييل</button>
+                  <button onClick={() => setSettingsTab('sideText')} className={`text-right px-3 py-2 text-xs font-bold rounded-lg transition ${settingsTab === 'sideText' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300' : 'text-slate-600 hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800'}`}>هوامش الجوانب</button>
+                  <button onClick={() => setSettingsTab('typography')} className={`text-right px-3 py-2 text-xs font-bold rounded-lg transition ${settingsTab === 'typography' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300' : 'text-slate-600 hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800'}`}>الخطوط والتنسيق</button>
+                  <button onClick={() => setSettingsTab('watermark')} className={`text-right px-3 py-2 text-xs font-bold rounded-lg transition ${settingsTab === 'watermark' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300' : 'text-slate-600 hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800'}`}>العلامة المائية</button>
+                  <div className="flex-1"></div>
+                  <div className="flex justify-between items-center mt-4">
+                    <div className="flex flex-col gap-1 w-full">
+                      <button type="button" onClick={handleSaveAsNewTemplate} className="w-full justify-center px-3 py-2 text-[10px] font-bold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg transition text-center flex items-center gap-1">
+                        <Plus className="w-3 h-3" />
+                        حفظ كقالب جديد
+                      </button>
+                      <button type="button" onClick={handleSaveTemplateAsDefault} className="w-full justify-center px-3 py-2 text-[10px] font-bold text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg transition text-center flex items-center gap-1">
+                        <Settings className="w-3 h-3" />
+                        حفظ كافتراضي
+                      </button>
+                      <button type="button" onClick={() => {
+                        handleSave();
+                      }} className="w-full justify-center px-3 py-2 text-[10px] font-bold text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg transition text-center flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3" />
+                        تطبيق القالب وحفظ
+                      </button>
+                      <button type="button" onClick={resetTemplateSettings} className="w-full justify-center px-3 py-2 text-[10px] font-bold text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition text-center flex items-center gap-1">استعادة الأولي</button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="sm:w-2/3 p-4 text-xs space-y-4">
+                  {settingsTab === 'margins' && (
+                    <>
+                      <div>
+                        <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">اتجاه الورقة</label>
+                        <select
+                          value={activeTemplate.orientation}
+                          onChange={(e) => setActiveTemplate({ ...activeTemplate, orientation: e.target.value as any })}
+                          className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-blue-500 outline-none"
+                        >
+                          <option value="portrait">عمودي (Portrait)</option>
+                          <option value="landscape">أفقي (Landscape)</option>
+                        </select>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">الهامش العلوي (سم)</label>
+                          <input type="number" step="0.1" value={activeTemplate.marginsCm.top} onChange={(e) => setActiveTemplate({ ...activeTemplate, marginsCm: { ...activeTemplate.marginsCm, top: Number(e.target.value) } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                        </div>
+                        <div>
+                          <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">الهامش السفلي (سم)</label>
+                          <input type="number" step="0.1" value={activeTemplate.marginsCm.bottom} onChange={(e) => setActiveTemplate({ ...activeTemplate, marginsCm: { ...activeTemplate.marginsCm, bottom: Number(e.target.value) } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                        </div>
+                        <div>
+                          <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">الهامش الأيمن (سم)</label>
+                          <input type="number" step="0.1" value={activeTemplate.marginsCm.right} onChange={(e) => setActiveTemplate({ ...activeTemplate, marginsCm: { ...activeTemplate.marginsCm, right: Number(e.target.value) } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                        </div>
+                        <div>
+                          <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">الهامش الأيسر (سم)</label>
+                          <input type="number" step="0.1" value={activeTemplate.marginsCm.left} onChange={(e) => setActiveTemplate({ ...activeTemplate, marginsCm: { ...activeTemplate.marginsCm, left: Number(e.target.value) } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {settingsTab === 'headerFooter' && (
+                    <>
+                      <div className="space-y-3">
+                        <h4 className="font-bold text-blue-600 dark:text-blue-400 border-b border-blue-100 pb-1">إعدادات الرأس (نصوص تظهر أسفل بعضها)</h4>
+                        <div>
+                          <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">النص 1: اسم المادة</label>
+                          <input type="text" value={activeTemplate.headerContent.rightText || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, headerContent: { ...activeTemplate.headerContent, rightText: e.target.value } })} placeholder={currentSubject?.name || "اسم المادة (تلقائي)"} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                        </div>
+                        <div>
+                          <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">النص 2: اسم الوحدة</label>
+                          <input type="text" value={activeTemplate.headerContent.centerText || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, headerContent: { ...activeTemplate.headerContent, centerText: e.target.value } })} placeholder={currentUnit?.title || "اسم الوحدة (تلقائي)"} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                        </div>
+                        <div>
+                          <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">النص 3: عنوان الدرس</label>
+                          <input type="text" value={activeTemplate.headerContent.leftText || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, headerContent: { ...activeTemplate.headerContent, leftText: e.target.value } })} placeholder={currentLesson?.title || "عنوان الدرس (تلقائي)"} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                        </div>
+                        <label className="flex items-center gap-2 cursor-pointer mt-2">
+                          <input type="checkbox" checked={activeTemplate.headerContent.differentFirstPage || false} onChange={(e) => setActiveTemplate({ ...activeTemplate, headerContent: { ...activeTemplate.headerContent, differentFirstPage: e.target.checked } })} className="rounded text-blue-600 focus:ring-blue-500" />
+                          <span className="text-slate-700 dark:text-slate-300">رأس وتذييل مختلف للصفحة الأولى</span>
+                        </label>
+                      </div>
+
+                      <div className="space-y-3 pt-2">
+                        <h4 className="font-bold text-blue-600 dark:text-blue-400 border-b border-blue-100 pb-1">إعدادات التذييل</h4>
+                        <div>
+                          <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">نص التذييل (حقوق النشر / اسم المعلم)</label>
+                          <input type="text" value={activeTemplate.footerContent.copyrightNotice || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, footerContent: { ...activeTemplate.footerContent, copyrightNotice: e.target.value } })} placeholder="جميع الحقوق محفوظة - نظام إديوتيك لإدارة المناهج © 2026" className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                        </div>
+                        <label className="flex items-center gap-2 cursor-pointer mt-2">
+                          <input type="checkbox" checked={activeTemplate.footerContent.showPageNumber} onChange={(e) => setActiveTemplate({ ...activeTemplate, footerContent: { ...activeTemplate.footerContent, showPageNumber: e.target.checked } })} className="rounded text-blue-600 focus:ring-blue-500" />
+                          <span className="text-slate-700 dark:text-slate-300">عرض رقم الصفحة</span>
+                        </label>
+                        {activeTemplate.footerContent.showPageNumber && (
+                          <div className="mt-3 p-3 bg-slate-100 dark:bg-slate-800/50 rounded-lg space-y-3 border border-slate-200 dark:border-slate-700">
+                            <h5 className="font-bold text-[10px] text-slate-500 mb-2">تنسيق رقم الصفحة</h5>
+                            
+                            <div className="grid grid-cols-2 gap-3">
+                              <div>
+                                <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1 text-[10px]">الموضع</label>
+                                <select 
+                                  value={activeTemplate.footerContent.pageNumberSettings?.align || 'left'} 
+                                  onChange={(e) => setActiveTemplate({ ...activeTemplate, footerContent: { ...activeTemplate.footerContent, pageNumberSettings: { ...activeTemplate.footerContent.pageNumberSettings, align: e.target.value as any } } })} 
+                                  className="w-full p-1.5 text-[11px] rounded border border-slate-200 dark:border-slate-700 dark:bg-slate-800"
+                                >
+                                  <option value="right">يمين</option>
+                                  <option value="center">المنتصف</option>
+                                  <option value="left">يسار</option>
+                                </select>
+                              </div>
+                              
+                              <div>
+                                <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1 text-[10px]">الخط</label>
+                                <select 
+                                  value={activeTemplate.footerContent.pageNumberSettings?.fontFamily || ''} 
+                                  onChange={(e) => setActiveTemplate({ ...activeTemplate, footerContent: { ...activeTemplate.footerContent, pageNumberSettings: { ...activeTemplate.footerContent.pageNumberSettings, fontFamily: e.target.value } } })} 
+                                  className="w-full p-1.5 text-[11px] rounded border border-slate-200 dark:border-slate-700 dark:bg-slate-800"
+                                >
+                                  <option value="">(افتراضي)</option>
+                                  <option value="Cairo">Cairo</option>
+                                  <option value="Tajawal">Tajawal</option>
+                                  <option value="Almarai">Almarai</option>
+                                  <option value="Arial, Helvetica, sans-serif">Arial</option>
+                                  <option value="'Courier New', Courier, monospace">Courier New</option>
+                                </select>
+                              </div>
+
+                              <div>
+                                <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1 text-[10px]">الحجم</label>
+                                <input 
+                                  type="number" 
+                                  placeholder="تلقائي"
+                                  value={activeTemplate.footerContent.pageNumberSettings?.fontSize || ''} 
+                                  onChange={(e) => setActiveTemplate({ ...activeTemplate, footerContent: { ...activeTemplate.footerContent, pageNumberSettings: { ...activeTemplate.footerContent.pageNumberSettings, fontSize: e.target.value ? Number(e.target.value) : undefined } } })} 
+                                  className="w-full p-1.5 text-[11px] rounded border border-slate-200 dark:border-slate-700 dark:bg-slate-800" 
+                                />
+                              </div>
+
+                              <div>
+                                <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1 text-[10px]">اللون</label>
+                                <input 
+                                  type="color" 
+                                  value={activeTemplate.footerContent.pageNumberSettings?.color || '#64748B'} 
+                                  onChange={(e) => setActiveTemplate({ ...activeTemplate, footerContent: { ...activeTemplate.footerContent, pageNumberSettings: { ...activeTemplate.footerContent.pageNumberSettings, color: e.target.value } } })} 
+                                  className="w-full h-7 p-0 rounded border border-slate-200 dark:border-slate-700 dark:bg-slate-800 cursor-pointer" 
+                                />
+                              </div>
+                            </div>
+                            <label className="flex items-center gap-2 cursor-pointer mt-2 text-[10px]">
+                              <input type="checkbox" checked={activeTemplate.footerContent.pageNumberSettings?.bold || false} onChange={(e) => setActiveTemplate({ ...activeTemplate, footerContent: { ...activeTemplate.footerContent, pageNumberSettings: { ...activeTemplate.footerContent.pageNumberSettings, bold: e.target.checked } } })} className="rounded text-blue-600 focus:ring-blue-500" />
+                              <span className="text-slate-700 dark:text-slate-300 font-bold">خط عريض (Bold)</span>
+                            </label>
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
+
+                  {settingsTab === 'typography' && (
+                    <>
+                      <div className="space-y-2">
+                        <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">عائلة الخط (Font Family)</label>
+                        <select
+                          value={
+                            ['Cairo', 'Tajawal', 'Almarai', "'IBM Plex Sans Arabic', sans-serif", "'Noto Naskh Arabic', serif", "'Traditional Arabic', serif", "'Amiri', serif", "'Aref Ruqaa', serif", "'Times New Roman', Times, serif", 'Arial, Helvetica, sans-serif', "'Courier New', Courier, monospace"].includes(activeTemplate.typography?.fontFamily || 'Cairo')
+                              ? (activeTemplate.typography?.fontFamily || 'Cairo')
+                              : 'custom'
+                          }
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            if (val !== 'custom') {
+                              setActiveTemplate({ ...activeTemplate, typography: { ...activeTemplate.typography, fontFamily: val } as any });
+                            } else {
+                              setActiveTemplate({ ...activeTemplate, typography: { ...activeTemplate.typography, fontFamily: 'Tahoma' } as any });
+                            }
+                          }}
+                          className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                        >
+                          <optgroup label="خطوط عربية حديثة">
+                            <option value="Cairo">Cairo (عصري ومقروء)</option>
+                            <option value="Tajawal">Tajawal (رسمي وحديث)</option>
+                            <option value="Almarai">Almarai (مريح للعين)</option>
+                            <option value="'IBM Plex Sans Arabic', sans-serif">IBM Plex Sans (تقني وأكاديمي)</option>
+                          </optgroup>
+                          <optgroup label="خطوط عربية أكاديمية">
+                            <option value="'Traditional Arabic', serif">Traditional Arabic (كلاسيكي أكاديمي ومقرر وزارياً)</option>
+                            <option value="'Noto Naskh Arabic', serif">Noto Naskh Arabic (نسخ قياسي)</option>
+                            <option value="'Amiri', serif">Amiri (أميري للمطبوعات)</option>
+                            <option value="'Aref Ruqaa', serif">Aref Ruqaa (رقعة)</option>
+                          </optgroup>
+                          <optgroup label="خطوط قياسية وإنجليزية">
+                            <option value="'Times New Roman', Times, serif">Times New Roman (أكاديمي إنجليزي)</option>
+                            <option value="Arial, Helvetica, sans-serif">Arial (قياسي أساسي)</option>
+                            <option value="'Courier New', Courier, monospace">Courier New (أكواد برمجية)</option>
+                          </optgroup>
+                          <option value="custom">إدخال خط مخصص...</option>
+                        </select>
+                        
+                        {!['Cairo', 'Tajawal', 'Almarai', "'IBM Plex Sans Arabic', sans-serif", "'Noto Naskh Arabic', serif", "'Traditional Arabic', serif", "'Amiri', serif", "'Aref Ruqaa', serif", "'Times New Roman', Times, serif", 'Arial, Helvetica, sans-serif', "'Courier New', Courier, monospace"].includes(activeTemplate.typography?.fontFamily || 'Cairo') && (
+                          <input 
+                            type="text" 
+                            placeholder="اكتب اسم الخط هنا (مثل: Tahoma)" 
+                            value={activeTemplate.typography?.fontFamily || ''}
+                            onChange={(e) => setActiveTemplate({ ...activeTemplate, typography: { ...activeTemplate.typography, fontFamily: e.target.value } as any })}
+                            className="w-full p-2 mt-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" 
+                          />
+                        )}
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">حجم الخط الأساسي (px)</label>
+                          <input type="number" value={activeTemplate.typography?.baseFontSize || 14} onChange={(e) => setActiveTemplate({ ...activeTemplate, typography: { ...activeTemplate.typography, baseFontSize: Number(e.target.value) } as any })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                        </div>
+                        <div>
+                          <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">حجم خط العناوين (px)</label>
+                          <input type="number" value={activeTemplate.typography?.headingSize || 22} onChange={(e) => setActiveTemplate({ ...activeTemplate, typography: { ...activeTemplate.typography, headingSize: Number(e.target.value) } as any })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">تباعد الأسطر (Line Spacing)</label>
+                        <select
+                          value={activeTemplate.typography?.lineSpacing || 1.5}
+                          onChange={(e) => setActiveTemplate({ ...activeTemplate, typography: { ...activeTemplate.typography, lineSpacing: Number(e.target.value) } as any })}
+                          className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                        >
+                          <option value={1.2}>1.2 (متقارب)</option>
+                          <option value={1.5}>1.5 (قياسي للمواد العلمية)</option>
+                          <option value={1.8}>1.8 (متباعد)</option>
+                          <option value={2.0}>2.0 (مزدوج)</option>
+                        </select>
+                      </div>
+                    </>
+                  )}
+
+                  {settingsTab === 'watermark' && (
+                    <>
+                      <label className="flex items-center gap-2 cursor-pointer mb-4">
+                        <input type="checkbox" checked={activeTemplate.watermark?.enabled || false} onChange={(e) => setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, enabled: e.target.checked } as any })} className="rounded text-blue-600 focus:ring-blue-500" />
+                        <span className="text-slate-900 dark:text-slate-100 font-bold">تفعيل العلامة المائية</span>
+                      </label>
+
+                      {(activeTemplate.watermark?.enabled) && (
+                        <div className="space-y-4">
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">نص العلامة المائية</label>
+                            <input type="text" value={activeTemplate.watermark?.text || 'نظام إديوتيك'} onChange={(e) => setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, text: e.target.value } as any })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" />
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">
+                              الشفافية: {Math.round((activeTemplate.watermark?.opacity || 0.1) * 100)}%
+                            </label>
+                            <input 
+                              type="range" 
+                              min="0.05" max="0.5" step="0.01" 
+                              value={activeTemplate.watermark?.opacity || 0.1} 
+                              onChange={(e) => setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, opacity: Number(e.target.value) } as any })} 
+                              className="w-full accent-blue-600" 
+                            />
+                            <p className="text-[10px] text-slate-500 mt-1">يُنصح بـ 10% إلى 15% لعدم التشويش على المعادلات</p>
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">التوجيه</label>
+                            <select
+                              value={activeTemplate.watermark?.orientation || 'diagonal'}
+                              onChange={(e) => setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, orientation: e.target.value as any } as any })}
+                              className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                            >
+                              <option value="diagonal">قطري (Diagonal - 45°)</option>
+                              <option value="horizontal">أفقي (Horizontal)</option>
+                            </select>
+                          </div>
+                          
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">
+                              حجم الخط: {activeTemplate.watermark?.fontSize || (activeTemplate.orientation === 'landscape' ? 120 : 100)}px
+                            </label>
+                            <input 
+                              type="range" 
+                              min="20" max="300" step="5" 
+                              value={activeTemplate.watermark?.fontSize || (activeTemplate.orientation === 'landscape' ? 120 : 100)} 
+                              onChange={(e) => setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, fontSize: Number(e.target.value) } as any })} 
+                              className="w-full accent-blue-600" 
+                            />
+                          </div>
+
+                          <label className="flex items-center gap-2 cursor-pointer mt-2">
+                            <input 
+                              type="checkbox" 
+                              checked={activeTemplate.watermark?.fitToPage || false} 
+                              onChange={(e) => setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, fitToPage: e.target.checked } as any })} 
+                              className="rounded text-blue-600 focus:ring-blue-500" 
+                            />
+                            <span className="text-slate-900 dark:text-slate-100 font-bold text-xs">احتواء داخل الصفحة (التفاف النص الطويل لعدم تجاوز الهامش)</span>
+                          </label>
+
+                          <div className="mt-3">
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">موضع العلامة المائية</label>
+                            <select
+                              value={activeTemplate.watermark?.layer || 'below'}
+                              onChange={(e) => setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, layer: e.target.value as any } as any })}
+                              className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                            >
+                              <option value="below">خلف النص (أسفل)</option>
+                              <option value="above">فوق النص (أعلى)</option>
+                            </select>
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-3 mt-3">
+                            <div>
+                              <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">لون العلامة المائية</label>
+                              <div className="flex gap-2 items-center">
+                                <input
+                                  type="color"
+                                  value={activeTemplate.watermark?.color || '#64748b'}
+                                  onChange={(e) => setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, color: e.target.value } as any })}
+                                  className="w-8 h-8 rounded cursor-pointer border border-slate-200 dark:border-slate-700 p-0 overflow-hidden"
+                                />
+                                <input
+                                  type="text"
+                                  value={activeTemplate.watermark?.color || '#64748b'}
+                                  onChange={(e) => setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, color: e.target.value } as any })}
+                                  className="flex-1 p-2 text-[10px] rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-mono"
+                                  dir="ltr"
+                                />
+                              </div>
+                            </div>
+                            
+                            <div>
+                              <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">نوع الخط</label>
+                              <select
+                                value={
+                                  ['Cairo', 'Tajawal', 'Almarai', "'IBM Plex Sans Arabic', sans-serif", "'Noto Naskh Arabic', serif", "'Traditional Arabic', serif", "'Amiri', serif", "'Aref Ruqaa', serif", "'Times New Roman', Times, serif", 'Arial, Helvetica, sans-serif', "'Courier New', Courier, monospace", ""].includes(activeTemplate.watermark?.fontFamily || '')
+                                    ? (activeTemplate.watermark?.fontFamily || '')
+                                    : 'custom'
+                                }
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  if (val !== 'custom') {
+                                    setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, fontFamily: val } as any });
+                                  } else {
+                                    setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, fontFamily: 'Tahoma' } as any });
+                                  }
+                                }}
+                                className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                              >
+                                <option value="">افتراضي (خط القالب)</option>
+                                <optgroup label="خطوط عربية حديثة">
+                                  <option value="Cairo">Cairo (عصري ومقروء)</option>
+                                  <option value="Tajawal">Tajawal (رسمي وحديث)</option>
+                                  <option value="Almarai">Almarai (مريح للعين)</option>
+                                  <option value="'IBM Plex Sans Arabic', sans-serif">IBM Plex Sans (تقني وأكاديمي)</option>
+                                </optgroup>
+                                <optgroup label="خطوط عربية أكاديمية">
+                                  <option value="'Traditional Arabic', serif">Traditional Arabic (كلاسيكي أكاديمي ومقرر وزارياً)</option>
+                                  <option value="'Noto Naskh Arabic', serif">Noto Naskh Arabic (نسخ قياسي)</option>
+                                  <option value="'Amiri', serif">Amiri (أميري للمطبوعات)</option>
+                                  <option value="'Aref Ruqaa', serif">Aref Ruqaa (رقعة)</option>
+                                </optgroup>
+                                <optgroup label="خطوط قياسية وإنجليزية">
+                                  <option value="'Times New Roman', Times, serif">Times New Roman (أكاديمي إنجليزي)</option>
+                                  <option value="Arial, Helvetica, sans-serif">Arial (قياسي أساسي)</option>
+                                  <option value="'Courier New', Courier, monospace">Courier New (أكواد برمجية)</option>
+                                </optgroup>
+                                <option value="custom">إدخال خط مخصص...</option>
+                              </select>
+                              
+                              {!['Cairo', 'Tajawal', 'Almarai', "'IBM Plex Sans Arabic', sans-serif", "'Noto Naskh Arabic', serif", "'Traditional Arabic', serif", "'Amiri', serif", "'Aref Ruqaa', serif", "'Times New Roman', Times, serif", 'Arial, Helvetica, sans-serif', "'Courier New', Courier, monospace", ""].includes(activeTemplate.watermark?.fontFamily || '') && (
+                                <input 
+                                  type="text" 
+                                  placeholder="اكتب اسم الخط هنا (مثل: Tahoma)" 
+                                  value={activeTemplate.watermark?.fontFamily || ''}
+                                  onChange={(e) => setActiveTemplate({ ...activeTemplate, watermark: { ...activeTemplate.watermark, fontFamily: e.target.value } as any })}
+                                  className="w-full p-2 mt-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-900 dark:text-slate-100" 
+                                />
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                                          </>
+                  )}
+                  {settingsTab === 'sideText' && (
+                    <div className="space-y-6">
+                      {/* Right Margin Text */}
+                      <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-4 bg-white dark:bg-slate-800">
+                        <h4 className="font-bold text-slate-800 dark:text-slate-100 mb-3 text-sm">نص الهامش الأيمن</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div className="sm:col-span-2">
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">النص (يُترك فارغاً للإلغاء)</label>
+                            <input type="text" value={activeTemplate.sideText?.right?.text || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, right: { ...activeTemplate.sideText?.right, text: e.target.value } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100" />
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">اتجاه الكتابة</label>
+                            <select value={activeTemplate.sideText?.right?.direction || 'top-to-bottom'} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, right: { ...activeTemplate.sideText?.right, direction: e.target.value as any } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+                              <option value="top-to-bottom">من الأعلى للأسفل</option>
+                              <option value="bottom-to-top">من الأسفل للأعلى</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">محاذاة النص</label>
+                            <select value={activeTemplate.sideText?.right?.align || 'center'} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, right: { ...activeTemplate.sideText?.right, align: e.target.value as any } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+                              <option value="start">بداية (أعلى/أسفل)</option>
+                              <option value="center">وسط</option>
+                              <option value="end">نهاية (أسفل/أعلى)</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">الخط</label>
+                            <select value={activeTemplate.sideText?.right?.fontFamily || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, right: { ...activeTemplate.sideText?.right, fontFamily: e.target.value } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+                              <option value="">الافتراضي</option>
+                              <option value="Cairo, sans-serif">Cairo</option>
+                              <option value="Tajawal, sans-serif">Tajawal</option>
+                              <option value="Almarai, sans-serif">Almarai</option>
+                              <option value="'Amiri', serif">Amiri</option>
+                              <option value="'Noto Naskh Arabic', serif">Noto Naskh Arabic</option>
+                              <option value="'Noto Kufi Arabic', sans-serif">Noto Kufi Arabic</option>
+                              <option value="Arial, sans-serif">Arial</option>
+                              <option value="'Times New Roman', serif">Times New Roman</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">الحجم</label>
+                            <input type="text" placeholder="مثال: 12px أو 1em" value={activeTemplate.sideText?.right?.fontSize || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, right: { ...activeTemplate.sideText?.right, fontSize: e.target.value } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100" />
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">اللون</label>
+                            <input type="color" value={activeTemplate.sideText?.right?.color || '#000000'} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, right: { ...activeTemplate.sideText?.right, color: e.target.value } as any } })} className="w-full h-9 rounded cursor-pointer" />
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">الإزاحة الجانبية (عن حافة الصفحة)</label>
+                            <input type="text" placeholder="مثال: 5px" value={activeTemplate.sideText?.right?.margin || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, right: { ...activeTemplate.sideText?.right, margin: e.target.value } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100" />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Left Margin Text */}
+                      <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-4 bg-white dark:bg-slate-800">
+                        <h4 className="font-bold text-slate-800 dark:text-slate-100 mb-3 text-sm">نص الهامش الأيسر</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div className="sm:col-span-2">
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">النص (يُترك فارغاً للإلغاء)</label>
+                            <input type="text" value={activeTemplate.sideText?.left?.text || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, left: { ...activeTemplate.sideText?.left, text: e.target.value } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100" />
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">اتجاه الكتابة</label>
+                            <select value={activeTemplate.sideText?.left?.direction || 'top-to-bottom'} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, left: { ...activeTemplate.sideText?.left, direction: e.target.value as any } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+                              <option value="top-to-bottom">من الأعلى للأسفل</option>
+                              <option value="bottom-to-top">من الأسفل للأعلى</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">محاذاة النص</label>
+                            <select value={activeTemplate.sideText?.left?.align || 'center'} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, left: { ...activeTemplate.sideText?.left, align: e.target.value as any } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+                              <option value="start">بداية (أعلى/أسفل)</option>
+                              <option value="center">وسط</option>
+                              <option value="end">نهاية (أسفل/أعلى)</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">الخط</label>
+                            <select value={activeTemplate.sideText?.left?.fontFamily || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, left: { ...activeTemplate.sideText?.left, fontFamily: e.target.value } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+                              <option value="">الافتراضي</option>
+                              <option value="Cairo, sans-serif">Cairo</option>
+                              <option value="Tajawal, sans-serif">Tajawal</option>
+                              <option value="Almarai, sans-serif">Almarai</option>
+                              <option value="'Amiri', serif">Amiri</option>
+                              <option value="'Noto Naskh Arabic', serif">Noto Naskh Arabic</option>
+                              <option value="'Noto Kufi Arabic', sans-serif">Noto Kufi Arabic</option>
+                              <option value="Arial, sans-serif">Arial</option>
+                              <option value="'Times New Roman', serif">Times New Roman</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">الحجم</label>
+                            <input type="text" placeholder="مثال: 12px أو 1em" value={activeTemplate.sideText?.left?.fontSize || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, left: { ...activeTemplate.sideText?.left, fontSize: e.target.value } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100" />
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">اللون</label>
+                            <input type="color" value={activeTemplate.sideText?.left?.color || '#000000'} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, left: { ...activeTemplate.sideText?.left, color: e.target.value } as any } })} className="w-full h-9 rounded cursor-pointer" />
+                          </div>
+                          <div>
+                            <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">الإزاحة الجانبية (عن حافة الصفحة)</label>
+                            <input type="text" placeholder="مثال: 5px" value={activeTemplate.sideText?.left?.margin || ''} onChange={(e) => setActiveTemplate({ ...activeTemplate, sideText: { ...activeTemplate.sideText, left: { ...activeTemplate.sideText?.left, margin: e.target.value } as any } })} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-slate-900 dark:text-slate-100" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              </div>
+            )}
+          </div>
+
+          {/* Lesson Content Paragraph Editor */}
+          <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xs space-y-4">
+            <div className="flex items-center justify-between border-b pb-2">
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <BookOpenCheck className="w-4 h-4 text-emerald-600" />
+                <span>فقرات المحتوى الشرحي والنظري</span>
+              </h3>
+              <button
+                onClick={addParagraph}
+                className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 text-xs font-bold hover:bg-blue-100 transition flex items-center gap-1"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>إضافة فقرة</span>
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {paragraphs.map((p, idx) => (
+                <div
+                  key={p.id}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, idx)}
+                  onDragOver={(e) => handleDragOver(e, idx)}
+                  onDragEnd={handleDragEnd}
+                  className={`p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border space-y-2 text-xs transition-shadow cursor-default ${
+                    draggedIdx === idx
+                      ? "border-blue-500 shadow-md opacity-50"
+                      : "border-slate-200 dark:border-slate-700"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 flex-1">
+                      <div className="cursor-grab active:cursor-grabbing p-1">
+                        <GripVertical className="w-4 h-4 text-slate-400 shrink-0" />
+                      </div>
+                      {editingTitleId === p.id ? (
+                        <input
+                          type="text"
+                          value={p.title}
+                          onChange={(e) => {
+                            const next = [...paragraphs];
+                            next[idx].title = e.target.value;
+                            setParagraphs(next);
+                          }}
+                          onBlur={() => setEditingTitleId(null)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') setEditingTitleId(null);
+                          }}
+                          autoFocus
+                          className="font-bold bg-transparent border-b border-blue-500 pb-0.5 text-slate-900 dark:text-slate-100 outline-none w-full transition"
+                        />
+                      ) : (
+                        <div className="font-bold text-slate-900 dark:text-slate-100 flex-1 flex items-center gap-2 group">
+                          <span className={`${p.style?.color || ''}`} style={{ fontFamily: p.style?.fontFamily, fontSize: p.style?.fontSize, color: p.style?.color && !p.style.color.startsWith('text-') ? p.style.color : undefined }}>{p.title}</span>
+                          <button
+                            onClick={() => setEditingTitleId(p.id)}
+                            className="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-blue-600 transition-opacity p-1"
+                            title="تعديل اسم الفقرة"
+                          >
+                            <Edit2 className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => setStylingParagraphId(p.id)}
+                            className="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-purple-600 transition-opacity p-1"
+                            title="تنسيق عنوان الفقرة"
+                          >
+                            <Palette className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <button
+                        onClick={() => {
+                          const next = new Set(collapsedParagraphIds);
+                          if (next.has(p.id)) next.delete(p.id);
+                          else next.add(p.id);
+                          setCollapsedParagraphIds(next);
+                        }}
+                        title={collapsedParagraphIds.has(p.id) ? "إظهار المحتوى" : "طي المحتوى"}
+                        className="text-slate-400 hover:text-blue-600 p-1"
+                      >
+                        {collapsedParagraphIds.has(p.id) ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (idx > 0) {
+                            const next = [...paragraphs];
+                            [next[idx - 1], next[idx]] = [next[idx], next[idx - 1]];
+                            setParagraphs(next);
+                          }
+                        }}
+                        disabled={idx === 0}
+                        title="تحريك لأعلى"
+                        className="text-slate-400 hover:text-blue-600 disabled:opacity-30 disabled:hover:text-slate-400 p-1"
+                      >
+                        <ChevronUp className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (idx < paragraphs.length - 1) {
+                            const next = [...paragraphs];
+                            [next[idx], next[idx + 1]] = [next[idx + 1], next[idx]];
+                            setParagraphs(next);
+                          }
+                        }}
+                        disabled={idx === paragraphs.length - 1}
+                        title="تحريك لأسفل"
+                        className="text-slate-400 hover:text-blue-600 disabled:opacity-30 disabled:hover:text-slate-400 p-1"
+                      >
+                        <ChevronDown className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => removeParagraph(p.id)}
+                        title="حذف الفقرة"
+                        className="text-red-500 hover:text-red-700 p-1"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {!collapsedParagraphIds.has(p.id) && (
+                    <QuestionTextBuilder
+                      value={p.body}
+                    onChange={(val) => {
+                      const next = [...paragraphs];
+                      next[idx].body = val;
+                      setParagraphs(next);
+                    }}
+                    title="محرر أسطر الفقرة"
+                    description="محتوى الفقرة"
+                    placeholderPrefix="محتوى الفقرة"
+                      collapsible={false}
+                      inputStyle={{
+                        fontFamily: p.style?.bodyFontFamily,
+                        fontSize: p.style?.bodyFontSize,
+                      }}
+                      customPreview={
+                        <div 
+                          className="text-slate-800"
+                          style={{
+                            fontFamily: p.style?.bodyFontFamily,
+                            fontSize: p.style?.bodyFontSize,
+                          }}
+                        >
+                          {p.body.split('\n').map((line, i) => (
+                            <div key={i} style={{ minHeight: "1.5em" }}>
+                              <MathText text={line} />
+                            </div>
+                          ))}
+                        </div>
+                      }
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Attached Questions from Question Bank Selector */}
+          <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xs space-y-4">
+            <div className="flex items-center justify-between border-b pb-2">
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Database className="w-4 h-4 text-purple-600" />
+                <span>الأسئلة المدرجة في الدرس (من بنك الأسئلة)</span>
+              </h3>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setIsAddingQuestion(!isAddingQuestion)}
+                  className="px-2 py-1 text-[10px] font-bold rounded bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400"
+                >
+                  {isAddingQuestion ? "إلغاء الإضافة" : "+ إضافة سؤال"}
+                </button>
+                <button
+                  onClick={() => setIsQuestionsCollapsed(!isQuestionsCollapsed)}
+                  className="text-slate-400 hover:text-blue-600 p-1"
+                >
+                  {isQuestionsCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            {!isQuestionsCollapsed && (
+              <div className="space-y-4">
+                {/* Selected Questions List (Draggable) */}
+                {attachedQuestions.length > 0 ? (
+                  <div className="space-y-2">
+                    {attachedQuestions.map((q, idx) => (
+                      <div
+                        key={q.id}
+                        draggable
+                        onDragStart={(e) => {
+                          setDraggedQuestionIdx(idx);
+                          e.dataTransfer.effectAllowed = "move";
+                          e.dataTransfer.setData("text/html", e.currentTarget.parentNode as any);
+                        }}
+                        onDragOver={(e) => {
+                          e.preventDefault();
+                          if (draggedQuestionIdx === null || draggedQuestionIdx === idx) return;
+                          const next = [...selectedQuestionIds];
+                          const draggedItem = next[draggedQuestionIdx];
+                          next.splice(draggedQuestionIdx, 1);
+                          next.splice(idx, 0, draggedItem);
+                          setDraggedQuestionIdx(idx);
+                          setSelectedQuestionIds(next);
+                        }}
+                        onDragEnd={() => setDraggedQuestionIdx(null)}
+                        className={`p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border flex items-center justify-between gap-3 transition-shadow ${
+                          draggedQuestionIdx === idx
+                            ? "border-blue-500 shadow-md opacity-50"
+                            : "border-slate-200 dark:border-slate-700"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 flex-1 min-w-0">
+                          <div className="cursor-grab active:cursor-grabbing p-1 shrink-0">
+                            <GripVertical className="w-4 h-4 text-slate-400" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
+                                {QUESTION_TYPES_LABEL[q.type] || q.type.toUpperCase()}
+                              </span>
+                            </div>
+                            <div className="font-semibold text-slate-900 dark:text-slate-100 text-xs truncate">
+                              {q.text}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            onClick={() => {
+                              if (idx > 0) {
+                                const next = [...selectedQuestionIds];
+                                [next[idx - 1], next[idx]] = [next[idx], next[idx - 1]];
+                                setSelectedQuestionIds(next);
+                              }
+                            }}
+                            disabled={idx === 0}
+                            title="تحريك لأعلى"
+                            className="text-slate-400 hover:text-blue-600 disabled:opacity-30 p-1"
+                          >
+                            <ChevronUp className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (idx < selectedQuestionIds.length - 1) {
+                                const next = [...selectedQuestionIds];
+                                [next[idx], next[idx + 1]] = [next[idx + 1], next[idx]];
+                                setSelectedQuestionIds(next);
+                              }
+                            }}
+                            disabled={idx === selectedQuestionIds.length - 1}
+                            title="تحريك لأسفل"
+                            className="text-slate-400 hover:text-blue-600 disabled:opacity-30 p-1"
+                          >
+                            <ChevronDown className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => setSelectedQuestionIds(selectedQuestionIds.filter(id => id !== q.id))}
+                            title="إزالة السؤال"
+                            className="text-red-500 hover:text-red-700 p-1"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-6 text-xs text-slate-500 border border-dashed rounded-xl border-slate-300 dark:border-slate-700">
+                    لا يوجد أسئلة مدرجة. انقر على "إضافة سؤال" لاختيار أسئلة من بنك الأسئلة.
+                  </div>
+                )}
+
+                {/* Available Questions List (Add Mode) */}
+                {isAddingQuestion && (
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                    <h4 className="text-[11px] font-bold text-slate-600 mb-3">اختر أسئلة للإضافة:</h4>
+                    <div className="space-y-2 text-xs max-h-[36rem] overflow-y-auto pr-2">
+                      {availableQuestions.map((q) => {
+                        const isChecked = selectedQuestionIds.includes(q.id);
+                        return (
+                          <label
+                            key={q.id}
+                            className={`flex items-start gap-2.5 p-2.5 rounded-xl border transition cursor-pointer ${
+                              isChecked
+                                ? "bg-blue-50 dark:bg-blue-900/30 border-blue-300 dark:border-blue-700 opacity-50"
+                                : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-blue-300"
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedQuestionIds([...selectedQuestionIds, q.id]);
+                                } else {
+                                  setSelectedQuestionIds(
+                                    selectedQuestionIds.filter((id) => id !== q.id)
+                                  );
+                                }
+                              }}
+                              className="mt-0.5 rounded text-blue-600 focus:ring-blue-500"
+                            />
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
+                                  {QUESTION_TYPES_LABEL[q.type] || q.type.toUpperCase()}
+                                </span>
+                              </div>
+                              <div className="font-semibold text-slate-900 dark:text-slate-100">
+                                {q.text}
+                              </div>
+                              <div className="text-[10px] text-slate-500 mt-0.5">
+                                الأهمية: {q.importance}/5 • الصعوبة: {q.difficulty} • احتمال الورود: {q.futureProbability}%
+                              </div>
+                            </div>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+        {/* Right Side: Live Printable A4 Preview Sheet (6 cols) */}
+        <div className={`lg:col-span-6 sticky top-20 transition-all ${isFullscreen ? 'fixed inset-0 z-50 bg-slate-900/90 flex flex-col items-center justify-start overflow-y-auto p-4 sm:p-8 backdrop-blur-sm' : ''}`}>
+          <div className="flex items-center justify-between mb-2 w-full max-w-[210mm] mx-auto">
+            <div className="text-xs font-bold text-slate-500 flex items-center gap-2">
+              <Printer className="w-4 h-4 text-blue-600" />
+              <span className={isFullscreen ? "text-slate-200" : ""}>معاينة نموذج الطباعة الرسمي الفعلي</span>
+            </div>
+            
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={() => setZoomLevel(Math.max(0.5, zoomLevel - 0.1))}
+                className={`p-1.5 rounded-lg ${isFullscreen ? 'text-slate-300 hover:bg-slate-800' : 'text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-800'} transition`}
+                title="تصغير"
+              >
+                <ZoomOut className="w-4 h-4" />
+              </button>
+              <span className={`text-[10px] font-bold ${isFullscreen ? 'text-slate-300' : 'text-slate-500'} w-8 text-center`}>
+                {Math.round(zoomLevel * 100)}%
+              </span>
+              <button
+                onClick={() => setZoomLevel(Math.min(2, zoomLevel + 0.1))}
+                className={`p-1.5 rounded-lg ${isFullscreen ? 'text-slate-300 hover:bg-slate-800' : 'text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-800'} transition`}
+                title="تكبير"
+              >
+                <ZoomIn className="w-4 h-4" />
+              </button>
+              <div className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1"></div>
+              <button
+                onClick={() => setIsFullscreen(!isFullscreen)}
+                className={`p-1.5 rounded-lg ${isFullscreen ? 'bg-blue-600 text-white hover:bg-blue-700' : 'text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-800'} transition`}
+                title={isFullscreen ? "تصغير الشاشة" : "ملء الشاشة"}
+              >
+                <Maximize2 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className="w-full overflow-x-auto pb-8">
+            <div 
+              className="origin-top flex justify-center min-w-[794px] mx-auto"
+              style={{ transform: `scale(${zoomLevel})`, transformOrigin: 'top center', marginBottom: `${(zoomLevel - 1) * 100}%` }}
+            >
+              <PaginatedA4Preview
+            template={{
+              ...activeTemplate,
+              headerContent: {
+                ...activeTemplate.headerContent,
+                subjectName: currentSubject?.name || "اسم المادة",
+              },
+              footerContent: {
+                ...activeTemplate.footerContent
+              }
+            }}
+            title={currentLesson?.title}
+            subtitle={`الأهداف التعليمية: ${currentLesson?.objectives?.join(" • ") || "مخرجات المنهاج المعتمدة"}`}
+            hierarchyText={`${currentUnit?.title || "الوحدة"}\n${currentLesson?.title || "الدرس"} | ${currentLesson?.durationMinutes ? currentLesson.durationMinutes + " دقيقة" : "45 دقيقة"}`}
+            items={[
+              ...paragraphs.map((p) => ({
+                id: p.id,
+                content: (
+                  <section className="space-y-1 mb-4">
+                    <h3 
+                      className={`text-xs font-extrabold border-b border-blue-200 pb-0.5 ${p.style?.color || 'text-blue-900'}`}
+                      style={{
+                        fontFamily: p.style?.fontFamily,
+                        fontSize: p.style?.fontSize,
+                        color: p.style?.color && !p.style.color.startsWith('text-') ? p.style.color : undefined
+                      }}
+                    >
+                      {p.title}
+                    </h3>
+                    <div className="lesson-content-paragraph text-[11px] leading-relaxed text-slate-800" style={{ fontFamily: p.style?.bodyFontFamily, fontSize: p.style?.bodyFontSize }}>
+                      {p.body.split('\n').map((line, i) => (
+                        <div key={i} style={{ minHeight: "1.5em" }}>
+                          <MathText text={line} />
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )
+              })),
+              ...(attachedQuestions.length > 0 ? [{
+                id: 'questions-section-header',
+                content: (
+                  <h3 className="text-xs font-bold text-slate-900 bg-slate-100 p-1.5 rounded mb-3 mt-4 border-t-2 border-slate-800 pt-3">
+                    أسئلة وتطبيقات الدرس المقترحة:
+                  </h3>
+                )
+              }] : []),
+              ...attachedQuestions.map((q, idx) => ({
+                id: q.id,
+                content: (
+                  <div className="text-[11px] p-2.5 rounded border border-slate-200 bg-slate-50/50 space-y-1.5 mb-3">
+                    <div className="font-bold text-slate-900 flex items-baseline gap-1">
+                      <span className="shrink-0">س {idx + 1}:</span>
+                      <MathText text={q.text} inline />
+                    </div>
+                    {q.type === "mcq" && q.distractors && (
+                      <div className="grid grid-cols-2 gap-1.5 pr-3 text-[10px] text-slate-700">
+                        {q.distractors.map((d, dIdx) => (
+                          <div key={d.id} className="flex items-baseline gap-1">
+                            <span className="shrink-0 font-bold">{["أ", "ب", "ج", "د"][dIdx] || "-"}:</span>
+                            <MathText text={d.text} inline />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {q.type === "true_false" && (
+                      <div className="pr-3 text-[10px] text-slate-700 font-semibold">
+                        [ ] صح &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ ] خطأ
+                      </div>
+                    )}
+                    <div className="text-[10px] text-slate-500 pt-1 border-t border-slate-200 flex items-baseline gap-1">
+                      <span className="shrink-0 font-bold">الإجابة النموذجية:</span>
+                      <MathText text={q.answer} inline />
+                    </div>
+                  </div>
+                )
+              }))
+            ]}
+          />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

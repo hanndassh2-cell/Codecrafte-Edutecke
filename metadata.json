@@ -1,0 +1,11 @@
+{
+  "name": "إديوتيك - Edutech",
+  "description": "نظام إدارة وأتمتة المناهج الدراسية وبنوك الأسئلة وتوليد الاختبارات بالذكاء الاصطناعي",
+  "requestFramePermissions": [
+    "clipboard-read",
+    "clipboard-write"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

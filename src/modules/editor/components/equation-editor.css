@@ -1,0 +1,64 @@
+/* Scoped modal chrome only. Never affects lesson, preview or PDF content. */
+.equation-overlay { position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px; background:rgb(15 23 42 / 48%); backdrop-filter:blur(3px); }
+.equation-dialog { width:min(1080px,100%); max-height:calc(100dvh - 40px); display:flex; flex-direction:column; overflow:hidden; background:#fff; color:#172b50; border:1px solid #d9e3f2; border-radius:16px; box-shadow:0 24px 80px #0f172a40; font-family:Cairo, sans-serif; font-size:14px; }
+.equation-dialog button { cursor:pointer; transition:background-color .15s,border-color .15s; }
+.equation-dialog button:disabled { opacity:.55; cursor:wait; }
+.equation-dialog button:focus-visible,.equation-dialog textarea:focus-visible { outline:3px solid #93c5fd; outline-offset:2px; }
+.equation-header { display:flex; align-items:center; justify-content:space-between; padding:20px 24px 12px; flex-shrink:0; }
+.equation-header h2 { font-size:21px; font-weight:800; margin:0 0 3px; }
+.equation-header p,.equation-writing>p { color:#64748b; margin:0; }
+.equation-icon-button { width:40px; height:40px; display:grid; place-items:center; border-radius:8px; }
+.equation-icon-button:hover { background:#eff6ff; }
+.equation-scroll-body { overflow-y:auto; min-height:0; overscroll-behavior:contain; padding:0 24px 18px; }
+.equation-subjects { display:flex; gap:12px; border-bottom:1px solid #dce5f1; margin:0 -24px 16px; padding:0 24px; }
+.equation-subjects button { padding:10px 24px; border-bottom:3px solid transparent; font-weight:700; }
+.equation-subjects button[aria-pressed=true] { color:#0866ee; border-bottom-color:#0866ee; }
+.equation-ribbon { display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); gap:5px; margin-bottom:12px; }
+.equation-ribbon>button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:9px; padding:10px 3px; min-height:118px; border:1px solid transparent; border-inline-end-color:#e6edf5; border-radius:7px; white-space:nowrap; }
+.equation-ribbon>button[aria-pressed=true] { background:#edf5ff; border-color:#3184ff; color:#0663eb; }
+.equation-ribbon>button:hover,.equation-gallery>button:hover { background:#eff6ff; border-color:#60a5fa; }
+.equation-formula { display:flex; align-items:center; justify-content:center; min-height:48px; font-size:24px; direction:ltr; pointer-events:none; }
+.equation-formula .katex { font-size:1em; }
+.equation-gallery { display:flex; flex-wrap:wrap; align-content:flex-start; gap:10px; padding:12px; background:#f6f8fc; border:1px solid #e0e7f1; border-radius:9px; max-height:210px; overflow:auto; }
+.equation-gallery>button { min-width:110px; max-width:200px; min-height:106px; flex:0 0 auto; padding:12px; display:flex; flex-direction:column; align-items:center; justify-content:space-between; gap:10px; border:1px solid #d9e2ef; border-radius:7px; background:#fff; }
+.equation-gallery>button .equation-formula { font-size:25px; }
+.equation-matrix-picker { display:flex; align-items:center; flex-wrap:wrap; gap:12px; padding:10px 12px; background:#f6f8fc; border:1px solid #dce5f1; border-top:0; border-radius:0 0 9px 9px; }
+.equation-matrix-grid { display:grid; grid-template-columns:repeat(5,24px); gap:3px; direction:ltr; }
+.equation-matrix-grid button { width:24px; height:24px; border:1px solid #9db4d3; border-radius:3px; background:#fff; }
+.equation-matrix-grid button.active,.equation-matrix-grid button:focus-visible { background:#bfdbfe; border-color:#0663eb; }
+.equation-format-bar { display:flex; align-items:center; flex-wrap:wrap; gap:4px; margin-top:12px; padding:7px; border:1px solid #dce5f1; border-radius:8px; background:#fff; }
+.equation-format-bar button { display:inline-flex; align-items:center; justify-content:center; gap:5px; padding:7px 12px; min-height:36px; border-inline-end:1px solid #e6edf5; font-weight:600; }
+.equation-format-bar button[aria-expanded=true],.equation-format-bar button:hover { color:#0663eb; background:#edf5ff; border-radius:5px; }
+.equation-tool-panel { display:flex; align-items:center; flex-wrap:wrap; gap:6px; padding:10px; border:1px solid #dce5f1; border-top:0; border-radius:0 0 8px 8px; background:#f6f8fc; }
+.equation-tool-panel button { display:inline-flex; align-items:center; justify-content:center; min-height:36px; padding:5px 10px; border:1px solid #d9e2ef; border-radius:5px; background:#fff; }
+.equation-tool-panel button:hover,.equation-tool-panel button[aria-pressed=true] { border-color:#0663eb; background:#eaf3ff; }
+.equation-tool-panel .equation-swatch { display:block; width:22px; height:22px; border:1px solid #64748b; border-radius:50%; }
+.equation-writing { margin-top:18px; }
+.equation-writing>label { display:block; font-weight:700; margin-bottom:7px; }
+.equation-field-shell { display:flex; align-items:center; min-height:116px; padding:20px; border:1px solid #b6c7e0; border-radius:9px; background:#fff; direction:ltr; }
+.equation-field-shell:focus-within { border-color:#0663eb; box-shadow:0 0 0 2px #0663eb20; }
+.equation-field-shell math-field { --selection-background-color:#bfdbfe; --caret-color:#0663eb; --contains-highlight-background-color:#eff6ff; max-width:100%; }
+.equation-field-shell math-field::part(virtual-keyboard-toggle) { display:none; }
+.equation-writing>p { font-size:13px; margin-top:8px; }
+.equation-writing>.equation-error { color:#b42318; background:#fff1f2; padding:10px; border-radius:6px; }
+.equation-options { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:22px; }
+.equation-placement,.equation-option-buttons,.equation-advanced-actions { display:flex; align-items:center; flex-wrap:wrap; gap:9px; }
+.equation-placement>span { font-weight:700; margin-inline-end:6px; }
+.equation-placement>div { display:flex; border:1px solid #dce5f1; border-radius:7px; overflow:hidden; }
+.equation-placement button { padding:10px 16px; background:#f8fafc; }
+.equation-placement button[aria-pressed=true] { color:#0663eb; background:#eaf3ff; box-shadow:inset 0 0 0 1px #3184ff; }
+.equation-option-buttons button,.equation-advanced-actions button { display:flex; align-items:center; gap:6px; padding:9px 12px; border:1px solid #dce5f1; border-radius:7px; }
+.equation-option-buttons button:hover,.equation-advanced-actions button:hover,.equation-footer button:hover { background:#eff6ff; }
+.equation-advanced { margin-top:18px; padding:16px; border:1px solid #dce5f1; border-radius:9px; background:#f8fafc; }
+.equation-advanced>label { display:block; margin:14px 0 8px; }
+.equation-advanced>textarea { width:100%; padding:12px; border:1px solid #cbd5e1; border-radius:7px; background:white; font-family:monospace; margin-bottom:12px; }
+.equation-history>div { display:flex; justify-content:space-between; gap:12px; padding:12px; border-bottom:1px solid #dce5f1; overflow:auto; }
+.equation-history button { color:#0663eb; }
+.equation-footer { flex-shrink:0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; border-top:1px solid #e0e7f1; padding:16px 24px; background:#fcfdff; }
+.equation-footer>span { color:#64748b; font-size:13px; }
+.equation-footer>div { display:flex; gap:10px; }
+.equation-footer button { display:flex; align-items:center; gap:8px; padding:11px 20px; border:1px solid #cdd9ea; border-radius:7px; font-weight:700; }
+.equation-footer .equation-submit { background:#0663eb; border-color:#0663eb; color:#fff; }
+.equation-footer .equation-submit:hover { background:#0754c5; }
+@media(max-width:800px) { .equation-ribbon { grid-template-columns:repeat(5,minmax(0,1fr)); } .equation-ribbon>button { min-height:98px; gap:5px; } }
+@media(max-width:480px) { .equation-overlay { padding:8px; } .equation-dialog { max-height:calc(100dvh - 16px); } .equation-header,.equation-footer { padding:14px; } .equation-scroll-body { padding-inline:14px; } .equation-subjects { margin-inline:-14px; padding-inline:14px; } .equation-ribbon { grid-template-columns:repeat(3,minmax(0,1fr)); } .equation-gallery>button { min-width:100px; flex:1 0 40%; } .equation-field-shell { padding:10px; } .equation-footer>span { display:none; } .equation-footer>div { width:100%; justify-content:flex-end; } }

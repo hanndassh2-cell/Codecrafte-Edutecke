@@ -1,0 +1,51 @@
+/* Editor chrome only: never change document, preview or export typography. */
+.lesson-editor-toolbar { font-family: Cairo, sans-serif; color: #172b4d; }
+.lesson-editor-toolbar .lesson-format-toolbar,
+.focused-editor-dialog .lesson-editor-toolbar .lesson-format-toolbar {
+  min-height: 50px; gap: 4px; padding: 6px 12px; scrollbar-width: thin;
+  overscroll-behavior-inline: contain;
+}
+.lesson-editor-toolbar .lesson-format-toolbar > * { flex-shrink: 0; }
+.lesson-editor-toolbar button,
+.lesson-editor-toolbar select,
+.lesson-editor-toolbar label { touch-action: manipulation; }
+.lesson-editor-toolbar .lesson-format-toolbar button,
+.lesson-editor-toolbar .table-context-toolbar button {
+  display: inline-flex; justify-content: center; align-items: center; gap: 3px;
+  min-width: 32px; min-height: 34px; border-radius: 5px; white-space: nowrap;
+}
+.lesson-editor-toolbar .lesson-format-toolbar button svg { width: 18px; height: 18px; flex-shrink: 0; }
+.lesson-editor-toolbar .lesson-format-toolbar button:hover:not(:disabled) { background: #edf5ff; color: #0866e8; }
+.lesson-editor-toolbar .lesson-format-toolbar button[aria-pressed="true"] { background: #e6f0ff; color: #0866e8; }
+.lesson-editor-toolbar button:focus-visible,
+.lesson-editor-toolbar select:focus-visible,
+.lesson-editor-toolbar label:focus-within { outline: 2px solid #0866e8; outline-offset: -2px; }
+.lesson-editor-toolbar .lesson-format-toolbar select { min-height: 34px; font-size: 14px; background: white; }
+.lesson-editor-toolbar select[aria-label="نوع الخط"] { max-width: 176px; width: 176px; }
+.lesson-editor-toolbar select[aria-label="حجم الخط"] { min-width: 68px; }
+.lesson-editor-toolbar .toolbar-second-row { display: flex; min-width: 0; height: 50px; border-top: 1px solid #dce3ed; background: white; }
+.lesson-editor-toolbar .toolbar-insert-slot { flex: 1; min-width: 0; }
+.lesson-editor-toolbar .toolbar-insert-slot[hidden] { display: none; }
+.lesson-editor-toolbar .lesson-insert-toolbar,
+.focused-editor-dialog .lesson-editor-toolbar .lesson-insert-toolbar {
+  height: 100%; min-height: 0; padding: 4px 12px; border-top: 0; gap: 0; background: transparent; scrollbar-width: thin;
+}
+.lesson-editor-toolbar .lesson-insert-toolbar button,
+.lesson-editor-toolbar .lesson-insert-toolbar label { display: inline-flex; align-items: center; gap: 7px; min-height: 36px; color: #24324b; font-size: 14px; font-weight: 600; white-space: nowrap; }
+.lesson-editor-toolbar .lesson-insert-toolbar svg { width: 20px; height: 20px; flex-shrink: 0; }
+.lesson-editor-toolbar .lesson-insert-group:last-child { border: 0; }
+.lesson-editor-toolbar .toolbar-context-switch { flex-shrink: 0; display: flex; gap: 6px; align-items: center; padding: 0 12px; color: #0866e8; font-size: 14px; border-inline-end: 1px solid #dce3ed; }
+.lesson-editor-toolbar .table-context-toolbar { height: 100%; border-top: 0; padding: 4px 8px; flex: 1; scrollbar-width: thin; }
+.lesson-editor-toolbar .table-context-toolbar > * { flex-shrink: 0; }
+.dark .lesson-editor-toolbar .toolbar-second-row,
+.dark .lesson-editor-toolbar .lesson-format-toolbar select { background: #0f172a; color: #e2e8f0; border-color: #334155; }
+.dark .lesson-editor-toolbar .lesson-insert-toolbar button,
+.dark .lesson-editor-toolbar .lesson-insert-toolbar label { color: #cbd5e1; }
+.dark .lesson-editor-toolbar .lesson-format-toolbar button[aria-pressed="true"] { background: #172b49; color: #93c5fd; }
+@media (max-width: 700px) {
+  .lesson-editor-toolbar .lesson-format-toolbar,
+  .focused-editor-dialog .lesson-editor-toolbar .lesson-format-toolbar { padding-inline: 8px; }
+  .lesson-editor-toolbar .lesson-format-toolbar button { min-height: 36px; min-width: 34px; }
+  .lesson-editor-toolbar select[aria-label="نوع الخط"] { width: 150px; }
+}
+@media print { .lesson-editor-toolbar { display: none !important; } }

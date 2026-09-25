@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة نماذج الذكاء الاصطناعي</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --border-color: #e2e8f0;
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, system-ui;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            direction: rtl;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-color);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="url"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background-color: #fff;
+            color: var(--text-main);
+            direction: ltr;
+            text-align: left;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .slider-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .slider-wrapper input[type="range"] {
+            flex: 1;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+            height: 6px;
+        }
+
+        .slider-value {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            min-width: 3.5rem;
+            text-align: center;
+        }
+
+        .slider-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+
+        .save-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+            margin-top: 1rem;
+        }
+
+        .save-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .save-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="header-title">إدارة نماذج الذكاء الاصطناعي</h1>
+
+        <!-- OCR Engine Card -->
+        <div class="card" id="ocr-card">
+            <div class="card-header">
+                <h2 class="card-title">محرك استخراج النصوص (OCR)</h2>
+            </div>
+            
+            <div class="form-group">
+                <label for="ocr-base-url">الرابط الأساسي (Base URL)</label>
+                <input type="url" id="ocr-base-url" placeholder="https://api.example.com/v1">
+            </div>
+
+            <div class="form-group">
+                <label for="ocr-model-name">اسم النموذج (Model Name)</label>
+                <input type="text" id="ocr-model-name" placeholder="gemini-2.5-flash">
+            </div>
+
+            <div class="form-group">
+                <label for="ocr-temperature">مؤشر التباين (Temperature)</label>
+                <div class="slider-wrapper">
+                    <input type="range" id="ocr-temperature" min="0" max="1" step="0.01" value="0.1">
+                    <span class="slider-value" id="ocr-temperature-val">0.10</span>
+                </div>
+                <div class="slider-hint">ينصح بقيمة منخفضة (مثل 0.1) لضمان دقة استخراج النصوص.</div>
+            </div>
+        </div>
+
+        <!-- Solver Engine Card -->
+        <div class="card" id="solver-card">
+            <div class="card-header">
+                <h2 class="card-title">محرك التحليل والحل</h2>
+            </div>
+            
+            <div class="form-group">
+                <label for="solver-base-url">الرابط الأساسي (Base URL)</label>
+                <input type="url" id="solver-base-url" placeholder="https://api.example.com/v1">
+            </div>
+
+            <div class="form-group">
+                <label for="solver-model-name">اسم النموذج (Model Name)</label>
+                <input type="text" id="solver-model-name" placeholder="gemini-2.5-pro">
+            </div>
+
+            <div class="form-group">
+                <label for="solver-temperature">مؤشر التباين (Temperature)</label>
+                <div class="slider-wrapper">
+                    <input type="range" id="solver-temperature" min="0" max="1" step="0.01" value="0.7">
+                    <span class="slider-value" id="solver-temperature-val">0.70</span>
+                </div>
+                <div class="slider-hint">ينصح بقيمة أعلى (مثل 0.7) لمرونة التحليل الأكاديمي.</div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="button" id="save-settings-btn" class="save-btn">حفظ الإعدادات</button>
+    </div>
+
+    <!-- UI Interaction Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup OCR Temperature Slider
+            const ocrSlider = document.getElementById('ocr-temperature');
+            const ocrValueDisplay = document.getElementById('ocr-temperature-val');
+            
+            ocrSlider.addEventListener('input', (e) => {
+                ocrValueDisplay.textContent = parseFloat(e.target.value).toFixed(2);
+            });
+
+            // Setup Solver Temperature Slider
+            const solverSlider = document.getElementById('solver-temperature');
+            const solverValueDisplay = document.getElementById('solver-temperature-val');
+            
+            solverSlider.addEventListener('input', (e) => {
+                solverValueDisplay.textContent = parseFloat(e.target.value).toFixed(2);
+            });
+
+            // Setup Save Button Interaction (Visual only)
+            const saveBtn = document.getElementById('save-settings-btn');
+            
+            saveBtn.addEventListener('click', () => {
+                // UI Feedback
+                const originalText = saveBtn.textContent;
+                saveBtn.textContent = 'جاري الحفظ...';
+                saveBtn.style.opacity = '0.8';
+                saveBtn.disabled = true;
+
+                // Simulate saving delay
+                setTimeout(() => {
+                    saveBtn.textContent = 'تم الحفظ بنجاح ✓';
+                    saveBtn.style.backgroundColor = '#10b981'; // Success green
+                    saveBtn.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        saveBtn.textContent = originalText;
+                        saveBtn.style.backgroundColor = '';
+                        saveBtn.disabled = false;
+                    }, 2000);
+                }, 800);
+            });
+        });
+    </script>
+</body>
+</html>
